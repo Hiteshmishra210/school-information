@@ -245,7 +245,9 @@ document.createElement("script");
 script.src =
 url +
 "&callback=" +
-callback;
+callback +
+"&t=" +
+Date.now();
 
 
 script.onerror = function(){
