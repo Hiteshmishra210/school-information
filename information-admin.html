@@ -118,6 +118,43 @@ button{
   border:1px solid #d7dee8;
   border-radius:8px;
 }
+.tableWrap{
+  overflow-x:auto;
+  margin-top:20px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  position:relative;
+}
+
+table{
+  width:max-content;
+  min-width:100%;
+  border-collapse:collapse;
+}
+
+th,
+td{
+  padding:8px;
+  border:1px solid #ddd;
+  white-space:nowrap;
+}
+
+/* School Name column FIXED */
+th:first-child,
+td:first-child{
+  position:sticky;
+  left:0;
+  z-index:3;
+  background:#f8fafc;
+  min-width:150px;
+}
+
+/* Header ka School Name */
+th:first-child{
+  background:#173b75;
+  color:white;
+  z-index:5;
+}
 
 table{
   border-collapse:collapse;
