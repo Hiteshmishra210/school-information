@@ -1014,14 +1014,40 @@ async function saveInformation(){
     /* =====================================
        SUBMIT INFORMATION
     ===================================== */
-const result =
-  await apiCall({
-    action:"submitInfo",
-    pin:pin,
-    formId:formId,
-    data:
-      JSON.stringify(data)
+let totalSaved = 0;
+
+for (let i = 0; i < data.length; i++) {
+
+  const item = data[i];
+
+  const response = await fetch(API, {
+    method: "POST",
+    headers: {
+      "Content-Type":
+        "application/x-www-form-urlencoded;charset=UTF-8"
+    },
+    body: new URLSearchParams({
+      action: "submit",
+      formId: formId,
+      school: item.school,
+      rows: JSON.stringify(item.values || [])
+    }).toString()
   });
+
+  const result = await response.json();
+
+  console.log("SAVE RESPONSE:", result);
+
+  if (!result || !result.ok) {
+    throw new Error(
+      result && result.error
+        ? result.error
+        : item.school + " की information save नहीं हुई"
+    );
+  }
+
+  totalSaved += Number(result.count || 1);
+}
 
 
     console.log(
