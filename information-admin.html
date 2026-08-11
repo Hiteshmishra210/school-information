@@ -635,23 +635,13 @@ async function createInformation(){
     /* =====================================
        CREATE INFORMATION FORM
     ===================================== */
-const response = await fetch(API, {
-  method: "POST",
-  headers: {
-    "Content-Type":
-      "application/x-www-form-urlencoded;charset=UTF-8"
-  },
-  body: new URLSearchParams({
-    action: "createForm",
-    pin: pin,
-    name: infoName,
-    columns: columns,
-    schools: schools
-  }).toString()
+const result = await apiCall({
+  action: "createForm",
+  pin: pin,
+  name: infoName,
+  columns: columns,
+  schools: schools
 });
-
-const result = await response.json();
-
     console.log(
       "CREATE RESPONSE:",
       result
@@ -1014,7 +1004,7 @@ async function saveInformation(){
     /* =====================================
        SUBMIT INFORMATION
     ===================================== */
-let totalSaved = 0;
+let to
 const result = await apiCall({
   action: "submitInfo",
   pin: pin,
@@ -1032,7 +1022,7 @@ if (!result || !result.ok) {
   );
 }
 
-const totalSaved = Number(result.count || data.length);
+
 
 
     console.log(
