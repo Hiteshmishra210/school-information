@@ -1013,12 +1013,21 @@ async function saveInformation(){
     /* =====================================
        SUBMIT INFORMATION
     ===================================== */
-const result = await apiCall({
-  action: "submitInfo",
-  pin: pin,
-  formId: formId,
-  data: JSON.stringify(data)
+const response = await fetch(API, {
+  method: "POST",
+  headers: {
+    "Content-Type":
+      "application/x-www-form-urlencoded;charset=UTF-8"
+  },
+  body: new URLSearchParams({
+    action: "submit",
+    pin: pin,
+    formId: formId,
+    data: JSON.stringify(tableData)
+  }).toString()
 });
+
+const result = await response.json();
 
 console.log("SAVE RESPONSE:", result);
 
@@ -1029,9 +1038,6 @@ if (!result || !result.ok) {
       : "Information save नहीं हुई"
   );
 }
-
-const totalSaved = Number(result.count || data.length);
-
 
 
 
