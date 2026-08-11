@@ -459,106 +459,118 @@ function showMsg(text,type){
 }
 
 
-/* =====================================================
-   API CALL
-===================================================== */
+// =====================================================
+// JSONP API
+// =====================================================
 
-async function apiCall(action, params = {}){
+let jsonpCounter = 0;
 
-  let url =
-    API +
-    "?action=" +
-    encodeURIComponent(action);
+function apiCall(params){
+
+  return new Promise(
+    function(resolve,reject){
+
+      const callbackName =
+        "apiCallback_" +
+        Date.now() +
+        "_" +
+        (++jsonpCounter);
+
+      params.callback =
+        callbackName;
+
+      const query =
+        Object.keys(params)
+          .map(function(key){
+
+            return (
+              encodeURIComponent(key) +
+              "=" +
+              encodeURIComponent(
+                params[key]
+              )
+            );
+
+          })
+          .join("&");
 
 
-  Object.keys(params).forEach(function(key){
-
-    url +=
-      "&" +
-      encodeURIComponent(key) +
-      "=" +
-      encodeURIComponent(params[key]);
-
-  });
+      const script =
+        document.createElement("script");
 
 
-  try{
+      const timeout =
+        setTimeout(
+          function(){
 
-    const response =
-      await fetch(
-        url,
-        {
-          method:"GET",
-          redirect:"follow",
-          cache:"no-store"
+            cleanup();
+
+            reject(
+              new Error(
+                "Google API response नहीं आया"
+              )
+            );
+
+          },
+          20000
+        );
+
+
+      window[callbackName] =
+        function(data){
+
+          clearTimeout(timeout);
+
+          cleanup();
+
+          resolve(data);
+
+        };
+
+
+      function cleanup(){
+
+        try{
+          delete window[callbackName];
+        }catch(e){}
+
+        if(script.parentNode){
+          script.parentNode.removeChild(script);
         }
-      );
+
+      }
 
 
-    if(!response.ok){
+      script.onerror =
+        function(){
 
-      throw new Error(
-        "Google API HTTP Error: " +
-        response.status
-      );
+          clearTimeout(timeout);
 
-    }
+          cleanup();
 
+          reject(
+            new Error(
+              "Google API connection failed"
+            )
+          );
 
-    const text =
-      await response.text();
-
-
-    if(!text){
-
-      throw new Error(
-        "Google API ने खाली response दिया"
-      );
-
-    }
+        };
 
 
-    let data;
+      script.src =
+        API +
+        "?" +
+        query;
 
 
-    try{
-
-      data =
-        JSON.parse(text);
-
-    }
-
-    catch(e){
-
-      console.log(
-        "API RESPONSE:",
-        text
-      );
-
-      throw new Error(
-        "Google API का response JSON नहीं है"
+      document.body.appendChild(
+        script
       );
 
     }
-
-
-    return data;
-
-  }
-
-  catch(error){
-
-    console.error(
-      "API ERROR:",
-      error
-    );
-
-    throw error;
-
-  }
+  );
 
 }
-
 
 /* =====================================================
    CREATE INFORMATION
