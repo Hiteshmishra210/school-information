@@ -172,16 +172,19 @@ function createForm(){
   showMsg("Form बनाया जा रहा है...","ok");
 
 
-  const url =
-    API +
-    "?action=createForm" +
-    "&pin=" + encodeURIComponent(pin) +
-    "&name=" + encodeURIComponent(name) +
-    "&columns=" + encodeURIComponent(cols) +
-    "&schools=" + encodeURIComponent(schools);
-
-
-  fetch(url)
+  fetch(API, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+  },
+  body: new URLSearchParams({
+    action: "createForm",
+    pin: pin,
+    name: name,
+    columns: cols,
+    schools: schools
+  })
+})
   .then(response => response.json())
   .then(data => {
 
