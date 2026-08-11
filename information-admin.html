@@ -655,18 +655,14 @@ async function createInformation(){
     /* =====================================
        CREATE INFORMATION FORM
     ===================================== */
-
-    const result =
-      await apiCall(
-        "createInfoForm",
-        {
-          pin:pin,
-          infoName:infoName,
-          columns:columns,
-          schools:schools
-        }
-      );
-
+const result =
+  await apiCall({
+    action:"createInfoForm",
+    pin:pin,
+    infoName:infoName,
+    columns:columns,
+    schools:schools
+  });
 
     console.log(
       "CREATE RESPONSE:",
@@ -1030,21 +1026,14 @@ async function saveInformation(){
     /* =====================================
        SUBMIT INFORMATION
     ===================================== */
-
-    const result =
-      await apiCall(
-        "submitInfo",
-        {
-
-          pin:pin,
-
-          formId:formId,
-
-          data:
-            JSON.stringify(data)
-
-        }
-      );
+const result =
+  await apiCall({
+    action:"submitInfo",
+    pin:pin,
+    formId:formId,
+    data:
+      JSON.stringify(data)
+  });
 
 
     console.log(
