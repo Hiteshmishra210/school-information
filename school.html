@@ -1,12 +1,535 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>School Information</title><style>
-*{box-sizing:border-box}body{font-family:Arial;background:#f4f7fb;margin:0}.wrap{max-width:1100px;margin:20px auto;padding:12px}.card{background:white;border-radius:14px;padding:20px;box-shadow:0 3px 15px #0001}label{font-weight:700;display:block;margin:10px 0 6px}select,input{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px}table{border-collapse:collapse;width:100%;min-width:650px}th,td{border:1px solid #d7dee8;padding:7px}th{background:#eef3f8}.scroll{overflow:auto}.btn{padding:10px 15px;border:0;border-radius:8px;margin:4px;cursor:pointer}.blue{background:#2563eb;color:#fff}.green{background:#15803d;color:#fff}.gray{background:#e2e8f0}.red{background:#dc2626;color:#fff}.hidden{display:none}.msg{padding:10px;margin-top:10px;border-radius:8px}.ok{background:#ecfdf3;color:#166534}.err{background:#fef2f2;color:#991b1b}@media print{.no-print{display:none!important}body{background:#fff}.card{box-shadow:none;padding:0}.wrap{margin:0;max-width:none}input{border:0;padding:2px}}</style></head><body><div class="wrap"><div class="card"><h1 id="title">Loading...</h1><label>School Name</label><select id="school"><option value="">-- अपना School Select करें --</option></select><div id="area" class="hidden"><h2 id="schoolTitle"></h2><div class="scroll"><table><thead id="head"></thead><tbody id="body"></tbody></table></div><div class="no-print"><button class="btn blue" onclick="addRow()">➕ Add Row</button><button class="btn green" onclick="submitForm()">☁️ Submit</button><button class="btn gray" onclick="print()">🖨️ Print This School</button></div><div id="msg"></div></div></div></div>
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>School Information</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+font-family:Arial,sans-serif;
+background:#f4f7fb;
+margin:0;
+color:#17202a
+}
+
+.wrap{
+max-width:1100px;
+margin:20px auto;
+padding:12px
+}
+
+.card{
+background:#fff;
+border-radius:14px;
+padding:20px;
+box-shadow:0 3px 15px #0001
+}
+
+label{
+font-weight:700;
+display:block;
+margin:10px 0 6px
+}
+
+select,input{
+width:100%;
+padding:10px;
+border:1px solid #cbd5e1;
+border-radius:8px;
+font-size:15px
+}
+
+table{
+border-collapse:collapse;
+width:100%;
+min-width:650px
+}
+
+th,td{
+border:1px solid #d7dee8;
+padding:7px
+}
+
+th{
+background:#eef3f8;
+text-align:left
+}
+
+.scroll{
+overflow:auto
+}
+
+.btn{
+padding:10px 15px;
+border:0;
+border-radius:8px;
+margin:4px;
+cursor:pointer;
+font-size:15px
+}
+
+.blue{background:#2563eb;color:#fff}
+.green{background:#15803d;color:#fff}
+.gray{background:#e2e8f0;color:#111}
+.red{background:#dc2626;color:#fff}
+
+.hidden{
+display:none
+}
+
+.msg{
+padding:10px;
+margin-top:10px;
+border-radius:8px
+}
+
+.ok{
+background:#ecfdf3;
+color:#166534
+}
+
+.err{
+background:#fef2f2;
+color:#991b1b
+}
+
+@media print{
+
+.no-print{
+display:none!important
+}
+
+body{
+background:#fff
+}
+
+.card{
+box-shadow:none;
+padding:0
+}
+
+.wrap{
+margin:0;
+max-width:none
+}
+
+input{
+border:0;
+padding:2px
+}
+
+select{
+border:0;
+appearance:none;
+padding:2px
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+<div class="card">
+
+<h1 id="title">Loading...</h1>
+
+<label>School Name</label>
+
+<select id="school">
+<option value="">-- अपना School Select करें --</option>
+</select>
+
+<div id="area" class="hidden">
+
+<h2 id="schoolTitle"></h2>
+
+<div class="scroll">
+
+<table>
+
+<thead id="head"></thead>
+
+<tbody id="body"></tbody>
+
+</table>
+
+</div>
+
+<div class="no-print">
+
+<button class="btn blue" onclick="addRow()">
+➕ Add Row
+</button>
+
+<button class="btn green" onclick="submitForm()">
+☁️ Submit
+</button>
+
+<button class="btn gray" onclick="printSchool()">
+🖨️ Print This School
+</button>
+
+</div>
+
+<div id="msg"></div>
+
+</div>
+
+</div>
+</div>
+
 <script>
-const API="https://script.google.com/macros/s/AKfycbx99czGRhevoQAV38jxIG0uDUfuCkC_KkmKluibPbpwSQPj4592gTJnOtPmBrkDWScIGQ/exec",id=new URLSearchParams(location.search).get("form");let cfg,rows=[],$=x=>document.getElementById(x);
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-async function load(){try{let u=new URL(API);u.searchParams.set("action","getForm");u.searchParams.set("formId",id);let d=await(await fetch(u)).json();if(!d.ok)throw Error(d.error);cfg=d.form;$("title").textContent=cfg.name;$("school").innerHTML='<option value="">-- अपना School Select करें --</option>'+cfg.schools.map(s=>'<option>'+esc(s)+'</option>').join("")}catch(e){$("title").textContent="Error: "+e.message}}
-$("school").onchange=function(){if(!this.value){$("area").classList.add("hidden");return}$("schoolTitle").textContent=this.value;rows=[Array(cfg.columns.length).fill("")];render();$("area").classList.remove("hidden")};
-function render(){$("head").innerHTML="<tr>"+cfg.columns.map(c=>"<th>"+esc(c)+"</th>").join("")+'<th class="no-print">Delete</th></tr>';$("body").innerHTML=rows.map((r,i)=>"<tr>"+r.map((v,j)=>'<td><input value="'+esc(v||"")+'" oninput="rows['+i+']['+j+']=this.value"></td>').join("")+'<td class="no-print"><button class="btn red" onclick="delRow('+i+')">🗑️</button></td></tr>').join("")}
-function addRow(){rows.push(Array(cfg.columns.length).fill(""));render()}function delRow(i){if(rows.length>1)rows.splice(i,1);else rows[0]=Array(cfg.columns.length).fill("");render()}
-async function submitForm(){let data=rows.filter(r=>r.some(v=>String(v).trim()!==""));if(!data.length)return alert("कम से कम एक row भरें");try{$("msg").className="msg";$("msg").textContent="Saving...";let u=new URL(API);u.searchParams.set("action","submit");u.searchParams.set("formId",id);u.searchParams.set("school",$("school").value);u.searchParams.set("rows",JSON.stringify(data));let d=await(await fetch(u)).json();if(!d.ok)throw Error(d.error);$("msg").className="msg ok";$("msg").textContent="✓ "+d.count+" row Google Sheet में save हो गई।"}catch(e){$("msg").className="msg err";$("msg").textContent="Error: "+e.message}}
+
+const API =
+"https://script.google.com/macros/s/AKfycbx99czGRhevoQAV38jxIG0uDUfuCkC_KkmKluibPbpwSQPj4592gTJnOtPmBrkDWScIGQ/exec";
+
+
+const formId =
+new URLSearchParams(location.search).get("form");
+
+
+let cfg = null;
+let rows = [];
+
+
+const $ = id =>
+document.getElementById(id);
+
+
+function esc(s){
+
+return String(s).replace(
+/[&<>"']/g,
+m => ({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[m])
+);
+
+}
+
+
+function jsonp(url){
+
+return new Promise((resolve,reject)=>{
+
+const callback =
+"cb_" +
+Date.now() +
+"_" +
+Math.random().toString(36).substring(2);
+
+
+window[callback] = function(data){
+
+delete window[callback];
+
+script.remove();
+
+resolve(data);
+
+};
+
+
+const script =
+document.createElement("script");
+
+script.src =
+url +
+"&callback=" +
+callback;
+
+
+script.onerror = function(){
+
+delete window[callback];
+
+script.remove();
+
+reject(
+new Error("Google API connection failed")
+);
+
+};
+
+
+document.body.appendChild(script);
+
+});
+
+}
+
+
+async function load(){
+
+try{
+
+if(!formId){
+
+throw new Error(
+"Form link में form ID नहीं है"
+);
+
+}
+
+
+let url =
+API +
+"?action=getForm" +
+"&formId=" +
+encodeURIComponent(formId);
+
+
+const data =
+await jsonp(url);
+
+
+if(!data.ok){
+
+throw new Error(data.error);
+
+}
+
+
+cfg = data.form;
+
+
+$("title").textContent =
+cfg.name;
+
+
+$("school").innerHTML =
+'<option value="">-- अपना School Select करें --</option>' +
+
+cfg.schools.map(
+s =>
+'<option value="' +
+esc(s) +
+'">' +
+esc(s) +
+'</option>'
+).join("");
+
+
+}
+catch(e){
+
+$("title").textContent =
+"Error: " + e.message;
+
+}
+
+}
+
+
+$("school").onchange = function(){
+
+if(!this.value){
+
+$("area").classList.add("hidden");
+
+return;
+
+}
+
+
+$("schoolTitle").textContent =
+this.value;
+
+
+rows = [
+Array(cfg.columns.length).fill("")
+];
+
+
+render();
+
+
+$("area").classList.remove("hidden");
+
+$("msg").innerHTML = "";
+
+};
+
+
+function render(){
+
+$("head").innerHTML =
+"<tr>" +
+
+cfg.columns.map(
+c =>
+"<th>" +
+esc(c) +
+"</th>"
+).join("") +
+
+'<th class="no-print">Delete</th>' +
+
+"</tr>";
+
+
+$("body").innerHTML =
+rows.map(
+(r,i) =>
+
+"<tr>" +
+
+r.map(
+(v,j) =>
+
+"<td>" +
+
+'<input value="' +
+esc(v || "") +
+'" oninput="rows[' +
+i +
+"][" +
+j +
+']=this.value">' +
+
+"</td>"
+
+).join("") +
+
+'<td class="no-print">' +
+
+'<button class="btn red" onclick="delRow(' +
+i +
+')">🗑️</button>' +
+
+"</td>" +
+
+"</tr>"
+
+).join("");
+
+}
+
+
+function addRow(){
+
+rows.push(
+Array(cfg.columns.length).fill("")
+);
+
+render();
+
+}
+
+
+function delRow(i){
+
+if(rows.length > 1){
+
+rows.splice(i,1);
+
+}
+else{
+
+rows[0] =
+Array(cfg.columns.length).fill("");
+
+}
+
+render();
+
+}
+
+
+async function submitForm(){
+
+const data =
+rows.filter(
+r =>
+r.some(
+v =>
+String(v).trim() !== ""
+)
+);
+
+
+if(!data.length){
+
+alert("कम से कम एक row भरें");
+
+return;
+
+}
+
+
+try{
+
+$("msg").className = "msg";
+
+$("msg").textContent =
+"Google Sheet में save हो रहा है...";
+
+
+const url =
+API +
+"?action=submit" +
+"&formId=" +
+encodeURIComponent(formId) +
+"&school=" +
+encodeURIComponent($("school").value) +
+"&rows=" +
+encodeURIComponent(JSON.stringify(data));
+
+
+const result =
+await jsonp(url);
+
+
+if(!result.ok){
+
+throw new Error(result.error);
+
+}
+
+
+$("msg").className =
+"msg ok";
+
+$("msg").textContent =
+"✓ " +
+result.count +
+" row Google Sheet में save हो गई।";
+
+
+}
+catch(e){
+
+$("msg").className =
+"msg err";
+
+$("msg").textContent =
+"Error: " +
+e.message;
+
+}
+
+}
+
+
+function printSchool(){
+
+window.print();
+
+}
+
+
 load();
-</script></body></html>
+
+</script>
+
+</body>
+</html>
