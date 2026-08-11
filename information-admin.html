@@ -189,18 +189,105 @@ td input{
 
 }
 
-@media print{
+@media print {
 
-  .no-print{
-    display:none!important;
+  @page {
+    size: landscape;
+    margin: 6mm;
   }
 
-  body{
-    background:white;
+  * {
+    box-sizing: border-box;
   }
 
-  .card{
-    box-shadow:none;
+  body {
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .wrap {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .card {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  #createSection {
+    display: none !important;
+  }
+
+  #entryArea {
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  #entryTitle {
+    font-size: 14px !important;
+    margin: 0 0 5px 0 !important;
+  }
+
+  .table-scroll {
+    overflow: visible !important;
+    border: 0 !important;
+    margin: 0 !important;
+  }
+
+  table {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+  }
+
+  th,
+  td {
+    border: 1px solid #000 !important;
+    padding: 2px !important;
+    font-size: 7px !important;
+    line-height: 1.1 !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    white-space: normal !important;
+    vertical-align: middle !important;
+  }
+
+  th {
+    font-weight: bold !important;
+    text-align: center !important;
+    background: #eee !important;
+  }
+
+  td.school-name {
+    min-width: 0 !important;
+    width: auto !important;
+    font-weight: bold !important;
+    background: #fff !important;
+  }
+
+  td input {
+    width: 100% !important;
+    min-width: 0 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    padding: 1px !important;
+    margin: 0 !important;
+    font-size: 7px !important;
+    line-height: 1.1 !important;
+    background: transparent !important;
+    color: #000 !important;
   }
 
 }
@@ -994,6 +1081,86 @@ async function saveInformation(){
       error.message;
 
   }
+
+}
+function printInformation(){
+
+  if(!cfg || !cfg.columns){
+    window.print();
+    return;
+  }
+
+  const columnCount = cfg.columns.length;
+
+  const oldStyle = document.getElementById("dynamicPrintStyle");
+
+  if(oldStyle){
+    oldStyle.remove();
+  }
+
+  const style = document.createElement("style");
+  style.id = "dynamicPrintStyle";
+
+  if(columnCount >= 8){
+
+    style.innerHTML = `
+      @page{
+        size: landscape;
+        margin: 5mm;
+      }
+
+      @media print{
+        th,td{
+          font-size: 6.5px !important;
+          padding: 2px !important;
+        }
+
+        td input{
+          font-size: 6.5px !important;
+        }
+      }
+    `;
+
+  }else{
+
+    style.innerHTML = `
+      @page{
+        size: portrait;
+        margin: 7mm;
+      }
+
+      @media print{
+        th,td{
+          font-size: 9px !important;
+          padding: 3px !important;
+        }
+
+        td input{
+          font-size: 9px !important;
+        }
+      }
+    `;
+
+  }
+
+  document.head.appendChild(style);
+
+  setTimeout(function(){
+
+    window.print();
+
+    setTimeout(function(){
+
+      const s =
+        document.getElementById("dynamicPrintStyle");
+
+      if(s){
+        s.remove();
+      }
+
+    },1000);
+
+  },100);
 
 }
 
