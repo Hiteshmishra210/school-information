@@ -2,8 +2,11 @@
 <html lang="hi">
 
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
 
 <title>Information Admin</title>
 
@@ -14,42 +17,48 @@
 }
 
 body{
+  margin:0;
   font-family:Arial,sans-serif;
   background:#f4f7fb;
-  margin:0;
+  color:#1f2937;
 }
 
 .wrap{
   max-width:900px;
-  margin:25px auto;
+  margin:20px auto;
   padding:15px;
 }
 
 .card{
   background:white;
-  border-radius:14px;
-  padding:22px;
-  box-shadow:0 3px 15px #0001;
+  border-radius:16px;
+  padding:25px;
+  box-shadow:0 4px 20px #0002;
 }
 
 h1{
-  color:#2456d3;
+  color:#2563eb;
   margin-top:0;
+  font-size:30px;
+}
+
+h2{
+  margin-top:25px;
 }
 
 label{
-  font-weight:700;
   display:block;
-  margin:14px 0 6px;
+  font-weight:700;
+  margin:15px 0 7px;
+  font-size:17px;
 }
 
 input,
 textarea{
   width:100%;
-  box-sizing:border-box;
-  padding:12px;
+  padding:13px;
   border:1px solid #cbd5e1;
-  border-radius:8px;
+  border-radius:10px;
   font-size:16px;
   font-family:Arial,sans-serif;
 }
@@ -60,71 +69,73 @@ textarea{
 
 button{
   width:100%;
-  padding:14px;
+  padding:15px;
+  margin-top:15px;
   border:0;
-  border-radius:9px;
+  border-radius:10px;
+  background:#2563eb;
   color:white;
   font-size:17px;
   font-weight:bold;
   cursor:pointer;
-  margin-top:15px;
 }
 
-button:hover{
-  opacity:.9;
-}
-
-.create{
-  background:#2563eb;
-}
-
-.copy{
-  background:#16a34a;
+button:active{
+  transform:scale(.99);
 }
 
 .test{
-  background:#128577;
+  background:#0f766e;
+}
+
+.next{
+  background:#16a34a;
 }
 
 .msg{
+  display:none;
   margin-top:15px;
-  padding:12px;
-  border-radius:8px;
+  padding:14px;
+  border-radius:10px;
+  font-size:16px;
   word-break:break-word;
-  line-height:1.5;
 }
 
 .ok{
-  background:#ecfdf3;
+  display:block;
+  background:#ecfdf5;
   color:#166534;
 }
 
 .err{
+  display:block;
   background:#fef2f2;
   color:#991b1b;
 }
 
 .info{
+  margin-top:20px;
+  padding:18px;
+  border-radius:12px;
   background:#fff7ed;
   color:#9a3412;
-  margin-top:20px;
+  line-height:1.7;
 }
 
 .result{
   display:none;
   margin-top:20px;
-  padding:15px;
-  background:#f8fafc;
-  border-radius:10px;
+  padding:18px;
+  border-radius:12px;
+  background:#eff6ff;
 }
 
-.link{
-  margin-top:10px;
-  padding:12px;
+.formid{
   background:white;
-  border:1px solid #ddd;
+  padding:12px;
   border-radius:8px;
   word-break:break-all;
+  margin-top:10px;
 }
 
 </style>
@@ -155,25 +166,24 @@ button:hover{
 
 <input
   id="infoName"
-  type="text"
-  placeholder="जैसे: Teacher Information"
+  placeholder="जैसे - Topper Information"
 >
 
 
-<label>📝 Column Names</label>
+<label>Column Names</label>
 
 <textarea
   id="columns"
   rows="7"
-  placeholder="Teacher Name
+  placeholder="Student Name
 Father Name
-Designation
-Subject
-Mobile Number"
+Marks
+Percentage
+Rank"
 ></textarea>
 
 
-<label>🏫 School Names</label>
+<label>School Names</label>
 
 <textarea
   id="schools"
@@ -184,8 +194,6 @@ School 3"
 ></textarea>
 
 
-<!-- TEST -->
-
 <button
   class="test"
   onclick="testAPI()"
@@ -194,58 +202,62 @@ School 3"
 </button>
 
 
-<!-- CREATE -->
-
 <button
-  class="create"
   onclick="createInformationForm()"
 >
 ➕ Create Information Form
 </button>
 
 
-<div id="msg"></div>
+<div id="msg" class="msg"></div>
 
 
-<div
-  id="result"
-  class="result"
->
+<div id="result" class="result">
 
-<h3>✅ Information Form तैयार हो गया</h3>
+<h2>✅ Information Form तैयार है</h2>
 
-<div class="link">
+<p>
+Form ID:
+</p>
 
-<b>Information Form Link:</b>
-
-<br><br>
-
-<span id="formLink"></span>
-
+<div id="formId"
+     class="formid">
 </div>
 
 
 <button
-  class="copy"
-  onclick="copyLink()"
+  class="next"
+  onclick="openInformationForm()"
 >
-📋 Copy Link
+➡️ Information Entry खोलें
 </button>
 
 </div>
 
 
-<div class="msg info">
+<div class="info">
 
 <b>ध्यान दें:</b>
 
-<br><br>
+<br>
 
-• Information Name डालें।<br>
-• Columns एक-एक line में डालें।<br>
-• Schools एक-एक line में डालें।<br>
-• Duplicate School/Column अपने आप हटेंगे।<br>
-• Form बनने के बाद अगली Information Form screen खुलेगी।
+• Information Name ऊपर डालें।
+
+<br>
+
+• Columns एक-एक line में डालें।
+
+<br>
+
+• Schools एक-एक line में डालें।
+
+<br>
+
+• Duplicate School/Column अपने आप हटेंगे।
+
+<br>
+
+• Form बनने के बाद अगला Information Entry page खुलेगा।
 
 </div>
 
@@ -258,19 +270,19 @@ School 3"
 <script>
 
 
-/* =====================================================
+/* ==========================================
    GOOGLE APPS SCRIPT API
-   ===================================================== */
+========================================== */
 
 const API =
 "https://script.google.com/macros/s/AKfycbyHb8abCXCQFAhemdCEcoHEo2gx3JL5eq_-X558SQITZXOiJ_ocCnVymLItAB2m2Pr5/exec";
 
 
-/* =====================================================
+/* ==========================================
    MESSAGE
-   ===================================================== */
+========================================== */
 
-function showMessage(text,type){
+function showMsg(text,type){
 
   const box =
     document.getElementById("msg");
@@ -280,54 +292,143 @@ function showMessage(text,type){
 
   box.innerText =
     text;
+
 }
 
 
-/* =====================================================
+/* ==========================================
+   JSONP API CALL
+   fetch() की जगह यह mobile friendly तरीका है
+========================================== */
+
+function callAPI(params){
+
+  return new Promise(function(resolve,reject){
+
+    const callbackName =
+      "googleCallback_" +
+      Date.now() +
+      "_" +
+      Math.floor(Math.random()*100000);
+
+
+    const script =
+      document.createElement("script");
+
+
+    let finished = false;
+
+
+    window[callbackName] =
+      function(data){
+
+        if(finished) return;
+
+        finished = true;
+
+        cleanup();
+
+        resolve(data);
+
+      };
+
+
+    function cleanup(){
+
+      try{
+        document.body.removeChild(script);
+      }catch(e){}
+
+      try{
+        delete window[callbackName];
+      }catch(e){
+        window[callbackName] = undefined;
+      }
+
+    }
+
+
+    const query =
+      new URLSearchParams(params);
+
+
+    query.set(
+      "callback",
+      callbackName
+    );
+
+
+    script.src =
+      API + "?" + query.toString();
+
+
+    script.onerror =
+      function(){
+
+        if(finished) return;
+
+        finished = true;
+
+        cleanup();
+
+        reject(
+          new Error(
+            "Google API connection failed"
+          )
+        );
+
+      };
+
+
+    document.body.appendChild(script);
+
+
+    setTimeout(function(){
+
+      if(finished) return;
+
+      finished = true;
+
+      cleanup();
+
+      reject(
+        new Error(
+          "Google API response नहीं मिला"
+        )
+      );
+
+    },15000);
+
+
+  });
+
+}
+
+
+/* ==========================================
    TEST API
-   ===================================================== */
+========================================== */
 
 function testAPI(){
 
-  showMessage(
-    "Google API test हो रहा है...",
+  showMsg(
+    "Google API check हो रही है...",
     "ok"
   );
 
 
-  const url =
-    API +
-    "?action=test";
-
-
-  fetch(url)
-
-  .then(function(response){
-
-    if(!response.ok){
-
-      throw new Error(
-        "HTTP Error " +
-        response.status
-      );
-
-    }
-
-    return response.json();
-
+  callAPI({
+    action:""
   })
 
   .then(function(data){
 
-    console.log(
-      "Google API Response:",
-      data
-    );
+    console.log(data);
 
 
     if(data && data.ok){
 
-      showMessage(
+      showMsg(
         "✅ Google API सही काम कर रही है।",
         "ok"
       );
@@ -336,13 +437,9 @@ function testAPI(){
 
     else{
 
-      showMessage(
-        "❌ Google API Error: " +
-        (
-          data && data.error
-          ? data.error
-          : "Unknown error"
-        ),
+      showMsg(
+        "❌ API Error: " +
+        (data.error || "Unknown error"),
         "err"
       );
 
@@ -352,14 +449,8 @@ function testAPI(){
 
   .catch(function(error){
 
-    console.error(
-      "API ERROR:",
-      error
-    );
-
-    showMessage(
-      "❌ Google API connection failed.\n\n" +
-      error.message,
+    showMsg(
+      "❌ " + error.message,
       "err"
     );
 
@@ -368,46 +459,36 @@ function testAPI(){
 }
 
 
-/* =====================================================
+/* ==========================================
    CREATE INFORMATION FORM
-   ===================================================== */
+========================================== */
 
 function createInformationForm(){
 
   const pin =
-    document
-      .getElementById("pin")
-      .value
-      .trim();
+    document.getElementById("pin")
+      .value.trim();
 
 
   const infoName =
-    document
-      .getElementById("infoName")
-      .value
-      .trim();
+    document.getElementById("infoName")
+      .value.trim();
 
 
   const columns =
-    document
-      .getElementById("columns")
-      .value
-      .trim();
+    document.getElementById("columns")
+      .value.trim();
 
 
   const schools =
-    document
-      .getElementById("schools")
-      .value
-      .trim();
+    document.getElementById("schools")
+      .value.trim();
 
-
-  /* VALIDATION */
 
   if(!pin){
 
-    showMessage(
-      "Admin PIN डालें।",
+    showMsg(
+      "Admin PIN डालें",
       "err"
     );
 
@@ -417,8 +498,8 @@ function createInformationForm(){
 
   if(!infoName){
 
-    showMessage(
-      "Information Name डालें।",
+    showMsg(
+      "Information Name डालें",
       "err"
     );
 
@@ -428,8 +509,8 @@ function createInformationForm(){
 
   if(!columns){
 
-    showMessage(
-      "Columns डालें।",
+    showMsg(
+      "Column Names डालें",
       "err"
     );
 
@@ -439,8 +520,8 @@ function createInformationForm(){
 
   if(!schools){
 
-    showMessage(
-      "Schools की list डालें।",
+    showMsg(
+      "School Names डालें",
       "err"
     );
 
@@ -448,158 +529,93 @@ function createInformationForm(){
   }
 
 
-  showMessage(
-    "Information Form बनाया जा रहा है...",
+  showMsg(
+    "⏳ Information Form बनाया जा रहा है...",
     "ok"
   );
 
 
-  /* =================================================
-     API URL
-     ================================================= */
-
-  const url =
-    API +
-    "?action=createInfoForm" +
-    "&pin=" +
-    encodeURIComponent(pin) +
-    "&infoName=" +
-    encodeURIComponent(infoName) +
-    "&columns=" +
-    encodeURIComponent(columns) +
-    "&schools=" +
-    encodeURIComponent(schools);
+  document.getElementById("result")
+    .style.display="none";
 
 
-  console.log(
-    "API URL:",
-    url
-  );
+  callAPI({
 
+    action:"createInfoForm",
 
-  /* =================================================
-     SAME FETCH METHOD AS WORKING ADMIN.HTML
-     ================================================= */
+    pin:pin,
 
-  fetch(url)
+    infoName:infoName,
 
-  .then(function(response){
+    columns:columns,
 
-    if(!response.ok){
-
-      throw new Error(
-        "HTTP Error " +
-        response.status
-      );
-
-    }
-
-    return response.json();
+    schools:schools
 
   })
 
   .then(function(data){
 
-    console.log(
-      "Google API Response:",
-      data
-    );
+    console.log(data);
 
 
-    if(!data){
+    if(!data || !data.ok){
 
-      showMessage(
-        "❌ Google API से response नहीं मिला।",
-        "err"
-      );
-
-      return;
-    }
-
-
-    if(!data.ok){
-
-      showMessage(
+      showMsg(
         "❌ Error: " +
-        (
-          data.error ||
-          "Unknown Google API Error"
-        ),
+        ((data && data.error)
+          ? data.error
+          : "Unknown error"),
         "err"
       );
 
       return;
     }
-
-
-    /* SUCCESS */
-
-    showMessage(
-      "✅ Information Form successfully create हो गया।",
-      "ok"
-    );
 
 
     const formId =
       data.formId;
 
 
-    /*
-      Current GitHub Pages location
-    */
+    /* Form ID save */
 
-    const base =
-      window.location.origin +
-      window.location.pathname
-        .replace(
-          "information-admin.html",
-          ""
-        );
-
-
-    /*
-      अगली Information Entry Screen
-    */
-
-    const formURL =
-      base +
-      "information.html?form=" +
-      encodeURIComponent(formId);
-
-
-    document
-      .getElementById("formLink")
+    document.getElementById("formId")
       .innerText =
-      formURL;
+      formId;
 
 
-    document
-      .getElementById("result")
+    /* Result दिखाओ */
+
+    document.getElementById("result")
       .style.display =
       "block";
 
 
-    /*
-      अगर तुम चाहते हो कि form बनते ही
-      अगला page खुले तो नीचे वाली line
-      uncomment कर सकते हो।
-
-      window.location.href = formURL;
-    */
-
-  })
-
-
-  .catch(function(error){
-
-    console.error(
-      "GOOGLE API ERROR:",
-      error
+    showMsg(
+      "✅ Information Form successfully create हो गया।",
+      "ok"
     );
 
 
-    showMessage(
-      "❌ Google API connection failed.\n\n" +
+    /* Save current form ID */
+
+    localStorage.setItem(
+      "informationFormId",
+      formId
+    );
+
+
+    localStorage.setItem(
+      "informationInfoName",
+      infoName
+    );
+
+
+  })
+
+  .catch(function(error){
+
+    showMsg(
+      "❌ Google API connection failed: " +
       error.message,
       "err"
     );
@@ -609,63 +625,51 @@ function createInformationForm(){
 }
 
 
-/* =====================================================
-   COPY LINK
-   ===================================================== */
+/* ==========================================
+   OPEN INFORMATION ENTRY
+========================================== */
 
-function copyLink(){
+function openInformationForm(){
 
-  const link =
-    document
-      .getElementById("formLink")
-      .innerText;
+  const formId =
+    document.getElementById("formId")
+      .innerText.trim();
 
 
-  if(!link){
+  if(!formId){
 
-    alert(
-      "पहले Information Form बनाएं।"
+    showMsg(
+      "Form ID नहीं मिला",
+      "err"
     );
 
     return;
   }
 
 
-  if(
-    navigator.clipboard &&
-    navigator.clipboard.writeText
-  ){
+  /*
+    information.html इसी folder में होना चाहिए
+  */
 
-    navigator.clipboard
-      .writeText(link)
+  const base =
+    window.location.href
+      .substring(
+        0,
+        window.location.href.lastIndexOf("/") + 1
+      );
 
-      .then(function(){
 
-        alert(
-          "Information Form Link copy हो गया ✅"
-        );
+  const url =
+    base +
+    "information.html?form=" +
+    encodeURIComponent(formId);
 
-      })
 
-      .catch(function(){
-
-        alert(
-          "Copy नहीं हुआ। Link manually copy करें।"
-        );
-
-      });
-
-  }
-
-  else{
-
-    alert(
-      "Link को manually copy करें।"
-    );
-
-  }
+  window.location.href =
+    url;
 
 }
+
 
 </script>
 
