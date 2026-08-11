@@ -960,7 +960,57 @@ async function submitForm(){
 
 function printSchool(){
 
-  window.print();
+  const table = document.querySelector("table");
+
+  if(!table){
+    window.print();
+    return;
+  }
+
+  const columns =
+    table.querySelectorAll("thead th").length;
+
+  /*
+    8 या उससे कम columns
+    → Portrait
+
+    9 या उससे ज्यादा
+    → Landscape
+  */
+
+  const orientation =
+    columns <= 8
+      ? "portrait"
+      : "landscape";
+
+  const oldStyle =
+    document.getElementById("printOrientation");
+
+  if(oldStyle){
+    oldStyle.remove();
+  }
+
+  const style =
+    document.createElement("style");
+
+  style.id = "printOrientation";
+
+  style.textContent = `
+    @media print {
+      @page {
+        size: A4 ${orientation};
+        margin: 6mm;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+
+  setTimeout(() => {
+
+    window.print();
+
+  }, 100);
 
 }
 
