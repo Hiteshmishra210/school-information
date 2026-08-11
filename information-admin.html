@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="hi">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Information Admin</title>
 
@@ -14,46 +14,43 @@
 }
 
 body{
-  margin:0;
   font-family:Arial,sans-serif;
-  background:linear-gradient(135deg,#eef4ff,#f8fbff);
-  min-height:100vh;
-  padding:20px;
+  background:#f4f7fb;
+  margin:0;
 }
 
 .wrap{
-  max-width:850px;
-  margin:auto;
+  max-width:900px;
+  margin:25px auto;
+  padding:15px;
 }
 
 .card{
-  background:#fff;
-  padding:25px;
-  border-radius:18px;
-  box-shadow:0 5px 25px rgba(0,0,0,.12);
+  background:white;
+  border-radius:14px;
+  padding:22px;
+  box-shadow:0 3px 15px #0001;
 }
 
 h1{
   color:#2456d3;
-  font-size:34px;
   margin-top:0;
 }
 
 label{
+  font-weight:700;
   display:block;
-  font-weight:bold;
-  font-size:18px;
-  margin-top:20px;
-  margin-bottom:8px;
+  margin:14px 0 6px;
 }
 
 input,
 textarea{
   width:100%;
-  padding:14px;
-  border:1px solid #ccd4df;
-  border-radius:10px;
-  font-size:17px;
+  box-sizing:border-box;
+  padding:12px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  font-size:16px;
   font-family:Arial,sans-serif;
 }
 
@@ -63,39 +60,42 @@ textarea{
 
 button{
   width:100%;
+  padding:14px;
   border:0;
-  padding:16px;
-  border-radius:12px;
-  margin-top:18px;
-  font-size:18px;
-  font-weight:bold;
+  border-radius:9px;
   color:white;
+  font-size:17px;
+  font-weight:bold;
   cursor:pointer;
+  margin-top:15px;
 }
 
-.test{
-  background:#128577;
+button:hover{
+  opacity:.9;
 }
 
 .create{
-  background:#2857d9;
+  background:#2563eb;
 }
 
 .copy{
   background:#16a34a;
 }
 
+.test{
+  background:#128577;
+}
+
 .msg{
-  margin-top:18px;
-  padding:15px;
-  border-radius:12px;
-  font-size:17px;
-  line-height:1.5;
+  margin-top:15px;
+  padding:12px;
+  border-radius:8px;
   word-break:break-word;
+  line-height:1.5;
 }
 
 .ok{
-  background:#ecfdf5;
+  background:#ecfdf3;
   color:#166534;
 }
 
@@ -107,29 +107,24 @@ button{
 .info{
   background:#fff7ed;
   color:#9a3412;
+  margin-top:20px;
 }
 
 .result{
   display:none;
-  margin-top:25px;
-  padding:18px;
+  margin-top:20px;
+  padding:15px;
   background:#f8fafc;
-  border-radius:12px;
+  border-radius:10px;
 }
 
 .link{
   margin-top:10px;
-  padding:14px;
+  padding:12px;
   background:white;
   border:1px solid #ddd;
-  border-radius:10px;
+  border-radius:8px;
   word-break:break-all;
-}
-
-.small{
-  font-size:14px;
-  color:#666;
-  margin-top:8px;
 }
 
 </style>
@@ -152,7 +147,8 @@ button{
   id="pin"
   type="password"
   value="1234"
-  placeholder="Admin PIN">
+  placeholder="Admin PIN"
+>
 
 
 <label>Information Name</label>
@@ -160,7 +156,8 @@ button{
 <input
   id="infoName"
   type="text"
-  placeholder="जैसे: Teacher Information">
+  placeholder="जैसे: Teacher Information"
+>
 
 
 <label>📝 Column Names</label>
@@ -172,11 +169,8 @@ button{
 Father Name
 Designation
 Subject
-Mobile Number"></textarea>
-
-<div class="small">
-हर Column अलग-अलग line में डालें।
-</div>
+Mobile Number"
+></textarea>
 
 
 <label>🏫 School Names</label>
@@ -186,21 +180,17 @@ Mobile Number"></textarea>
   rows="10"
   placeholder="School 1
 School 2
-School 3"></textarea>
-
-<div class="small">
-हर School अलग-अलग line में डालें।
-</div>
+School 3"
+></textarea>
 
 
-<!-- TEST API -->
+<!-- TEST -->
 
 <button
   class="test"
-  onclick="testAPI()">
-
+  onclick="testAPI()"
+>
 🔎 Test Google API
-
 </button>
 
 
@@ -208,10 +198,9 @@ School 3"></textarea>
 
 <button
   class="create"
-  onclick="createInformationForm()">
-
+  onclick="createInformationForm()"
+>
 ➕ Create Information Form
-
 </button>
 
 
@@ -220,7 +209,8 @@ School 3"></textarea>
 
 <div
   id="result"
-  class="result">
+  class="result"
+>
 
 <h3>✅ Information Form तैयार हो गया</h3>
 
@@ -237,10 +227,9 @@ School 3"></textarea>
 
 <button
   class="copy"
-  onclick="copyLink()">
-
+  onclick="copyLink()"
+>
 📋 Copy Link
-
 </button>
 
 </div>
@@ -252,15 +241,11 @@ School 3"></textarea>
 
 <br><br>
 
-• Information Name ऊपर डालें।<br>
-
+• Information Name डालें।<br>
 • Columns एक-एक line में डालें।<br>
-
 • Schools एक-एक line में डालें।<br>
-
 • Duplicate School/Column अपने आप हटेंगे।<br>
-
-• Form बनने के बाद Information Form Link मिलेगा।
+• Form बनने के बाद अगली Information Form screen खुलेगी।
 
 </div>
 
@@ -274,7 +259,7 @@ School 3"></textarea>
 
 
 /* =====================================================
-   INFORMATION API
+   GOOGLE APPS SCRIPT API
    ===================================================== */
 
 const API =
@@ -295,99 +280,6 @@ function showMessage(text,type){
 
   box.innerText =
     text;
-
-}
-
-
-/* =====================================================
-   JSONP FUNCTION
-   IMPORTANT:
-   fetch() नहीं इस्तेमाल किया गया।
-   इससे mobile CORS problem avoid होगी।
-   ===================================================== */
-
-function callAPI(params, callback){
-
-  const callbackName =
-    "googleAPI_" +
-    Date.now() +
-    "_" +
-    Math.floor(Math.random()*100000);
-
-
-  window[callbackName] =
-    function(data){
-
-      try{
-
-        callback(data);
-
-      }
-
-      finally{
-
-        delete window[callbackName];
-
-        if(script.parentNode){
-
-          script.parentNode.removeChild(script);
-
-        }
-
-      }
-
-    };
-
-
-  params.callback =
-    callbackName;
-
-
-  const query =
-    Object.keys(params)
-    .map(function(key){
-
-      return encodeURIComponent(key)
-        + "=" +
-        encodeURIComponent(params[key]);
-
-    })
-    .join("&");
-
-
-  const script =
-    document.createElement("script");
-
-
-  script.src =
-    API + "?" + query;
-
-
-  script.onerror =
-    function(){
-
-      delete window[callbackName];
-
-      if(script.parentNode){
-
-        script.parentNode.removeChild(script);
-
-      }
-
-      callback({
-
-        ok:false,
-
-        error:
-          "Google API connection failed. API URL या Deployment में समस्या है।"
-
-      });
-
-    };
-
-
-  document.body.appendChild(script);
-
 }
 
 
@@ -403,38 +295,75 @@ function testAPI(){
   );
 
 
-  callAPI(
+  const url =
+    API +
+    "?action=test";
 
-    {
-      action:"test"
-    },
 
-    function(data){
+  fetch(url)
 
-      if(data && data.ok){
+  .then(function(response){
 
-        showMessage(
-          "✅ Google API सही काम कर रही है।",
-          "ok"
-        );
+    if(!response.ok){
 
-      }
-
-      else{
-
-        showMessage(
-          "❌ Google API Error: " +
-          (data && data.error
-            ? data.error
-            : "Unknown error"),
-          "err"
-        );
-
-      }
+      throw new Error(
+        "HTTP Error " +
+        response.status
+      );
 
     }
 
-  );
+    return response.json();
+
+  })
+
+  .then(function(data){
+
+    console.log(
+      "Google API Response:",
+      data
+    );
+
+
+    if(data && data.ok){
+
+      showMessage(
+        "✅ Google API सही काम कर रही है।",
+        "ok"
+      );
+
+    }
+
+    else{
+
+      showMessage(
+        "❌ Google API Error: " +
+        (
+          data && data.error
+          ? data.error
+          : "Unknown error"
+        ),
+        "err"
+      );
+
+    }
+
+  })
+
+  .catch(function(error){
+
+    console.error(
+      "API ERROR:",
+      error
+    );
+
+    showMessage(
+      "❌ Google API connection failed.\n\n" +
+      error.message,
+      "err"
+    );
+
+  });
 
 }
 
@@ -483,7 +412,6 @@ function createInformationForm(){
     );
 
     return;
-
   }
 
 
@@ -495,7 +423,6 @@ function createInformationForm(){
     );
 
     return;
-
   }
 
 
@@ -507,7 +434,6 @@ function createInformationForm(){
     );
 
     return;
-
   }
 
 
@@ -519,7 +445,6 @@ function createInformationForm(){
     );
 
     return;
-
   }
 
 
@@ -530,118 +455,156 @@ function createInformationForm(){
 
 
   /* =================================================
-     JSONP API CALL
+     API URL
      ================================================= */
 
-  callAPI(
-
-    {
-
-      action:
-        "createInfoForm",
-
-      pin:
-        pin,
-
-      infoName:
-        infoName,
-
-      columns:
-        columns,
-
-      schools:
-        schools
-
-    },
+  const url =
+    API +
+    "?action=createInfoForm" +
+    "&pin=" +
+    encodeURIComponent(pin) +
+    "&infoName=" +
+    encodeURIComponent(infoName) +
+    "&columns=" +
+    encodeURIComponent(columns) +
+    "&schools=" +
+    encodeURIComponent(schools);
 
 
-    function(data){
+  console.log(
+    "API URL:",
+    url
+  );
 
-      console.log(
-        "Google API Response:",
-        data
+
+  /* =================================================
+     SAME FETCH METHOD AS WORKING ADMIN.HTML
+     ================================================= */
+
+  fetch(url)
+
+  .then(function(response){
+
+    if(!response.ok){
+
+      throw new Error(
+        "HTTP Error " +
+        response.status
       );
-
-
-      if(!data){
-
-        showMessage(
-          "❌ Google API से response नहीं मिला।",
-          "err"
-        );
-
-        return;
-
-      }
-
-
-      if(!data.ok){
-
-        showMessage(
-
-          "❌ Error: " +
-          (
-            data.error ||
-            "Unknown Google API Error"
-          ),
-
-          "err"
-
-        );
-
-        return;
-
-      }
-
-
-      /* SUCCESS */
-
-      showMessage(
-        "✅ Information Form successfully create हो गया।",
-        "ok"
-      );
-
-
-      const formId =
-        data.formId;
-
-
-      /* =================================================
-         CURRENT GITHUB PAGES LOCATION
-         ================================================= */
-
-      const base =
-        window.location.origin +
-        window.location.pathname
-          .replace(
-            "information-admin.html",
-            ""
-          );
-
-
-      const formURL =
-        base +
-        "information.html?form=" +
-        encodeURIComponent(
-          formId
-        );
-
-
-      document
-        .getElementById("formLink")
-        .innerText =
-        formURL;
-
-
-      document
-        .getElementById("result")
-        .style.display =
-        "block";
-
 
     }
 
-  );
+    return response.json();
+
+  })
+
+  .then(function(data){
+
+    console.log(
+      "Google API Response:",
+      data
+    );
+
+
+    if(!data){
+
+      showMessage(
+        "❌ Google API से response नहीं मिला।",
+        "err"
+      );
+
+      return;
+    }
+
+
+    if(!data.ok){
+
+      showMessage(
+        "❌ Error: " +
+        (
+          data.error ||
+          "Unknown Google API Error"
+        ),
+        "err"
+      );
+
+      return;
+    }
+
+
+    /* SUCCESS */
+
+    showMessage(
+      "✅ Information Form successfully create हो गया।",
+      "ok"
+    );
+
+
+    const formId =
+      data.formId;
+
+
+    /*
+      Current GitHub Pages location
+    */
+
+    const base =
+      window.location.origin +
+      window.location.pathname
+        .replace(
+          "information-admin.html",
+          ""
+        );
+
+
+    /*
+      अगली Information Entry Screen
+    */
+
+    const formURL =
+      base +
+      "information.html?form=" +
+      encodeURIComponent(formId);
+
+
+    document
+      .getElementById("formLink")
+      .innerText =
+      formURL;
+
+
+    document
+      .getElementById("result")
+      .style.display =
+      "block";
+
+
+    /*
+      अगर तुम चाहते हो कि form बनते ही
+      अगला page खुले तो नीचे वाली line
+      uncomment कर सकते हो।
+
+      window.location.href = formURL;
+    */
+
+  })
+
+
+  .catch(function(error){
+
+    console.error(
+      "GOOGLE API ERROR:",
+      error
+    );
+
+
+    showMessage(
+      "❌ Google API connection failed.\n\n" +
+      error.message,
+      "err"
+    );
+
+  });
 
 }
 
@@ -665,7 +628,6 @@ function copyLink(){
     );
 
     return;
-
   }
 
 
@@ -676,6 +638,7 @@ function copyLink(){
 
     navigator.clipboard
       .writeText(link)
+
       .then(function(){
 
         alert(
@@ -687,7 +650,7 @@ function copyLink(){
       .catch(function(){
 
         alert(
-          "Copy नहीं हुआ। Link को manually copy करें।"
+          "Copy नहीं हुआ। Link manually copy करें।"
         );
 
       });
