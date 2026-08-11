@@ -1,139 +1,164 @@
 <!doctype html>
 <html lang="hi">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
+
 <title>School Information</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box
+}
 
 body{
-font-family:Arial,sans-serif;
-background:#f4f7fb;
-margin:0;
-color:#17202a
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  margin:0;
+  color:#17202a
 }
 
 .wrap{
-max-width:1100px;
-margin:20px auto;
-padding:12px
+  max-width:1100px;
+  margin:20px auto;
+  padding:12px
 }
 
 .card{
-background:#fff;
-border-radius:14px;
-padding:20px;
-box-shadow:0 3px 15px #0001
+  background:#fff;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 3px 15px #0001
 }
 
 label{
-font-weight:700;
-display:block;
-margin:10px 0 6px
+  font-weight:700;
+  display:block;
+  margin:10px 0 6px
 }
 
 select,input{
-width:100%;
-padding:10px;
-border:1px solid #cbd5e1;
-border-radius:8px;
-font-size:15px
+  width:100%;
+  padding:10px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  font-size:15px
 }
 
 table{
-border-collapse:collapse;
-width:100%;
-min-width:650px
+  border-collapse:collapse;
+  width:100%;
+  min-width:650px
 }
 
 th,td{
-border:1px solid #d7dee8;
-padding:7px
+  border:1px solid #d7dee8;
+  padding:7px
 }
 
 th{
-background:#eef3f8;
-text-align:left
+  background:#eef3f8;
+  text-align:left
 }
 
 .scroll{
-overflow:auto
+  overflow:auto
 }
 
 .btn{
-padding:10px 15px;
-border:0;
-border-radius:8px;
-margin:4px;
-cursor:pointer;
-font-size:15px
+  padding:10px 15px;
+  border:0;
+  border-radius:8px;
+  margin:4px;
+  cursor:pointer;
+  font-size:15px
 }
 
-.blue{background:#2563eb;color:#fff}
-.green{background:#15803d;color:#fff}
-.gray{background:#e2e8f0;color:#111}
-.red{background:#dc2626;color:#fff}
+.blue{
+  background:#2563eb;
+  color:#fff
+}
+
+.green{
+  background:#15803d;
+  color:#fff
+}
+
+.gray{
+  background:#e2e8f0;
+  color:#111
+}
+
+.red{
+  background:#dc2626;
+  color:#fff
+}
 
 .hidden{
-display:none
+  display:none
 }
 
 .msg{
-padding:10px;
-margin-top:10px;
-border-radius:8px
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px
 }
 
 .ok{
-background:#ecfdf3;
-color:#166534
+  background:#ecfdf3;
+  color:#166534
 }
 
 .err{
-background:#fef2f2;
-color:#991b1b
+  background:#fef2f2;
+  color:#991b1b
 }
 
 @media print{
 
-.no-print{
-display:none!important
+  .no-print{
+    display:none!important
+  }
+
+  body{
+    background:#fff
+  }
+
+  .card{
+    box-shadow:none;
+    padding:0
+  }
+
+  .wrap{
+    margin:0;
+    max-width:none
+  }
+
+  input{
+    border:0;
+    padding:2px
+  }
+
+  select{
+    border:0;
+    appearance:none;
+    padding:2px
+  }
+
 }
 
-body{
-background:#fff
-}
-
-.card{
-box-shadow:none;
-padding:0
-}
-
-.wrap{
-margin:0;
-max-width:none
-}
-
-input{
-border:0;
-padding:2px
-}
-
-select{
-border:0;
-appearance:none;
-padding:2px
-}
-
-}
 </style>
+
 </head>
 
 <body>
 
 <div class="wrap">
+
 <div class="card">
 
 <h1 id="title">Loading...</h1>
@@ -141,7 +166,11 @@ padding:2px
 <label>School Name</label>
 
 <select id="school">
-<option value="">-- अपना School Select करें --</option>
+
+<option value="">
+-- अपना School Select करें --
+</option>
+
 </select>
 
 <div id="area" class="hidden">
@@ -162,16 +191,22 @@ padding:2px
 
 <div class="no-print">
 
-<button class="btn blue" onclick="addRow()">
-➕ Add Row
+<button
+  class="btn blue"
+  onclick="addRow()">
+  ➕ Add Row
 </button>
 
-<button class="btn green" onclick="submitForm()">
-☁️ Submit
+<button
+  class="btn green"
+  onclick="submitForm()">
+  ☁️ Submit
 </button>
 
-<button class="btn gray" onclick="printSchool()">
-🖨️ Print This School
+<button
+  class="btn gray"
+  onclick="printSchool()">
+  🖨️ Print This School
 </button>
 
 </div>
@@ -181,19 +216,34 @@ padding:2px
 </div>
 
 </div>
+
 </div>
 
+
 <script>
+
+/* ================================
+   GOOGLE APPS SCRIPT API
+   ================================ */
 
 const API =
 "https://script.google.com/macros/s/AKfycbx99czGRhevoQAV38jxIG0uDUfuCkC_KkmKluibPbpwSQPj4592gTJnOtPmBrkDWScIGQ/exec";
 
 
+/* ================================
+   FORM ID
+   ================================ */
+
 const formId =
 new URLSearchParams(location.search).get("form");
 
 
+/* ================================
+   VARIABLES
+   ================================ */
+
 let cfg = null;
+
 let rows = [];
 
 
@@ -201,333 +251,458 @@ const $ = id =>
 document.getElementById(id);
 
 
+/* ================================
+   HTML ESCAPE
+   ================================ */
+
 function esc(s){
 
-return String(s).replace(
-/[&<>"']/g,
-m => ({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-}[m])
-);
+  return String(s).replace(
+    /[&<>"']/g,
+    m => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[m])
+  );
 
 }
 
+
+/* ================================
+   JSONP FUNCTION
+   ================================ */
 
 function jsonp(url){
 
-return new Promise((resolve,reject)=>{
+  return new Promise((resolve,reject)=>{
 
-const callback =
-"cb_" +
-Date.now() +
-"_" +
-Math.random().toString(36).substring(2);
+    const callback =
+      "cb_" +
+      Date.now() +
+      "_" +
+      Math.random()
+        .toString(36)
+        .substring(2);
 
+    let finished = false;
 
-window[callback] = function(data){
-
-delete window[callback];
-
-script.remove();
-
-resolve(data);
-
-};
+    const script =
+      document.createElement("script");
 
 
-const script =
-document.createElement("script");
+    function cleanup(){
 
-script.src =
-url +
-"&callback=" +
-callback +
-"&t=" +
-Date.now();
+      if(finished) return;
 
+      finished = true;
 
-script.onerror = function(){
+      try{
+        delete window[callback];
+      }
+      catch(e){}
 
-delete window[callback];
+      if(script.parentNode){
 
-script.remove();
+        script.parentNode.removeChild(script);
 
-reject(
-new Error("Google API connection failed")
-);
+      }
 
-};
+    }
 
 
-document.body.appendChild(script);
+    window[callback] =
+      function(data){
 
-});
+        cleanup();
+
+        resolve(data);
+
+      };
+
+
+    script.async = true;
+
+
+    script.src =
+      url +
+      "&callback=" +
+      encodeURIComponent(callback) +
+      "&t=" +
+      Date.now();
+
+
+    script.onerror =
+      function(){
+
+        cleanup();
+
+        reject(
+          new Error(
+            "Google API connection failed"
+          )
+        );
+
+      };
+
+
+    document.head.appendChild(script);
+
+
+    setTimeout(
+      function(){
+
+        if(!finished){
+
+          cleanup();
+
+          reject(
+            new Error(
+              "Google API connection timeout"
+            )
+          );
+
+        }
+
+      },
+      15000
+    );
+
+  });
 
 }
 
+
+/* ================================
+   LOAD FORM
+   ================================ */
 
 async function load(){
 
-try{
+  try{
 
-if(!formId){
+    if(!formId){
 
-throw new Error(
-"Form link में form ID नहीं है"
-);
+      throw new Error(
+        "Form link में form ID नहीं है"
+      );
+
+    }
+
+
+    let url =
+      API +
+      "?action=getForm" +
+      "&formId=" +
+      encodeURIComponent(formId);
+
+
+    const data =
+      await jsonp(url);
+
+
+    if(!data.ok){
+
+      throw new Error(
+        data.error || "Form नहीं मिला"
+      );
+
+    }
+
+
+    cfg = data.form;
+
+
+    $("title").textContent =
+      cfg.name;
+
+
+    $("school").innerHTML =
+      '<option value="">-- अपना School Select करें --</option>' +
+
+      cfg.schools
+        .map(
+          s =>
+            '<option value="' +
+            esc(s) +
+            '">' +
+            esc(s) +
+            '</option>'
+        )
+        .join("");
+
+
+  }
+  catch(e){
+
+    $("title").textContent =
+      "Error: " + e.message;
+
+    $("msg").className =
+      "msg err";
+
+    $("msg").textContent =
+      "Error: " + e.message;
+
+  }
 
 }
 
 
-let url =
-API +
-"?action=getForm" +
-"&formId=" +
-encodeURIComponent(formId);
+/* ================================
+   SCHOOL SELECT
+   ================================ */
+
+$("school").onchange =
+function(){
+
+  if(!this.value){
+
+    $("area")
+      .classList
+      .add("hidden");
+
+    return;
+
+  }
 
 
-const data =
-await jsonp(url);
+  $("schoolTitle")
+    .textContent =
+    this.value;
 
 
-if(!data.ok){
-
-throw new Error(data.error);
-
-}
-
-
-cfg = data.form;
+  rows = [
+    Array(cfg.columns.length)
+      .fill("")
+  ];
 
 
-$("title").textContent =
-cfg.name;
+  render();
 
 
-$("school").innerHTML =
-'<option value="">-- अपना School Select करें --</option>' +
-
-cfg.schools.map(
-s =>
-'<option value="' +
-esc(s) +
-'">' +
-esc(s) +
-'</option>'
-).join("");
+  $("area")
+    .classList
+    .remove("hidden");
 
 
-}
-catch(e){
-
-$("title").textContent =
-"Error: " + e.message;
-
-}
-
-}
-
-
-$("school").onchange = function(){
-
-if(!this.value){
-
-$("area").classList.add("hidden");
-
-return;
-
-}
-
-
-$("schoolTitle").textContent =
-this.value;
-
-
-rows = [
-Array(cfg.columns.length).fill("")
-];
-
-
-render();
-
-
-$("area").classList.remove("hidden");
-
-$("msg").innerHTML = "";
+  $("msg").innerHTML = "";
 
 };
 
 
+/* ================================
+   RENDER TABLE
+   ================================ */
+
 function render(){
 
-$("head").innerHTML =
-"<tr>" +
+  $("head").innerHTML =
+    "<tr>" +
 
-cfg.columns.map(
-c =>
-"<th>" +
-esc(c) +
-"</th>"
-).join("") +
+    cfg.columns
+      .map(
+        c =>
+          "<th>" +
+          esc(c) +
+          "</th>"
+      )
+      .join("") +
 
-'<th class="no-print">Delete</th>' +
+    '<th class="no-print">Delete</th>' +
 
-"</tr>";
+    "</tr>";
 
 
-$("body").innerHTML =
-rows.map(
-(r,i) =>
+  $("body").innerHTML =
 
-"<tr>" +
+    rows
+      .map(
+        (r,i) =>
 
-r.map(
-(v,j) =>
+          "<tr>" +
 
-"<td>" +
+          r
+            .map(
+              (v,j) =>
 
-'<input value="' +
-esc(v || "") +
-'" oninput="rows[' +
-i +
-"][" +
-j +
-']=this.value">' +
+                "<td>" +
 
-"</td>"
+                '<input value="' +
+                esc(v || "") +
+                '" oninput="rows[' +
+                i +
+                "][" +
+                j +
+                ']=this.value">' +
 
-).join("") +
+                "</td>"
 
-'<td class="no-print">' +
+            )
+            .join("") +
 
-'<button class="btn red" onclick="delRow(' +
-i +
-')">🗑️</button>' +
+          '<td class="no-print">' +
 
-"</td>" +
+          '<button class="btn red" onclick="delRow(' +
+          i +
+          ')">🗑️</button>' +
 
-"</tr>"
+          "</td>" +
 
-).join("");
+          "</tr>"
+
+      )
+      .join("");
 
 }
 
+
+/* ================================
+   ADD ROW
+   ================================ */
 
 function addRow(){
 
-rows.push(
-Array(cfg.columns.length).fill("")
-);
+  rows.push(
+    Array(cfg.columns.length)
+      .fill("")
+  );
 
-render();
+  render();
 
 }
 
+
+/* ================================
+   DELETE ROW
+   ================================ */
 
 function delRow(i){
 
-if(rows.length > 1){
+  if(rows.length > 1){
 
-rows.splice(i,1);
+    rows.splice(i,1);
+
+  }
+  else{
+
+    rows[0] =
+      Array(cfg.columns.length)
+        .fill("");
+
+  }
+
+  render();
 
 }
-else{
 
-rows[0] =
-Array(cfg.columns.length).fill("");
 
-}
-
-render();
-
-}
-
+/* ================================
+   SUBMIT FORM
+   ================================ */
 
 async function submitForm(){
 
-const data =
-rows.filter(
-r =>
-r.some(
-v =>
-String(v).trim() !== ""
-)
-);
+  const data =
+    rows.filter(
+      r =>
+        r.some(
+          v =>
+            String(v).trim() !== ""
+        )
+    );
 
 
-if(!data.length){
+  if(!data.length){
 
-alert("कम से कम एक row भरें");
+    alert(
+      "कम से कम एक row भरें"
+    );
 
-return;
+    return;
+
+  }
+
+
+  try{
+
+    $("msg").className =
+      "msg";
+
+    $("msg").textContent =
+      "Google Sheet में save हो रहा है...";
+
+
+    const url =
+      API +
+      "?action=submit" +
+      "&formId=" +
+      encodeURIComponent(formId) +
+      "&school=" +
+      encodeURIComponent(
+        $("school").value
+      ) +
+      "&rows=" +
+      encodeURIComponent(
+        JSON.stringify(data)
+      );
+
+
+    const result =
+      await jsonp(url);
+
+
+    if(!result.ok){
+
+      throw new Error(
+        result.error ||
+        "Save नहीं हुआ"
+      );
+
+    }
+
+
+    $("msg").className =
+      "msg ok";
+
+
+    $("msg").textContent =
+      "✓ " +
+      result.count +
+      " row Google Sheet में save हो गई।";
+
+
+  }
+  catch(e){
+
+    $("msg").className =
+      "msg err";
+
+    $("msg").textContent =
+      "Error: " +
+      e.message;
+
+  }
 
 }
 
 
-try{
-
-$("msg").className = "msg";
-
-$("msg").textContent =
-"Google Sheet में save हो रहा है...";
-
-
-const url =
-API +
-"?action=submit" +
-"&formId=" +
-encodeURIComponent(formId) +
-"&school=" +
-encodeURIComponent($("school").value) +
-"&rows=" +
-encodeURIComponent(JSON.stringify(data));
-
-
-const result =
-await jsonp(url);
-
-
-if(!result.ok){
-
-throw new Error(result.error);
-
-}
-
-
-$("msg").className =
-"msg ok";
-
-$("msg").textContent =
-"✓ " +
-result.count +
-" row Google Sheet में save हो गई।";
-
-
-}
-catch(e){
-
-$("msg").className =
-"msg err";
-
-$("msg").textContent =
-"Error: " +
-e.message;
-
-}
-
-}
-
+/* ================================
+   PRINT
+   ================================ */
 
 function printSchool(){
 
-window.print();
+  window.print();
 
 }
 
+
+/* ================================
+   START
+   ================================ */
 
 load();
 
