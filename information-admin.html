@@ -1,623 +1,268 @@
 <!doctype html>
 <html lang="hi">
-
 <head>
-
 <meta charset="utf-8">
-
-<meta name="viewport"
-      content="width=device-width,initial-scale=1">
-
-<title>Information Admin</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>School Information Admin</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
-
 body{
   font-family:Arial,sans-serif;
   background:#f4f7fb;
   margin:0;
-  color:#17202a;
 }
-
 .wrap{
   max-width:900px;
-  margin:20px auto;
-  padding:12px;
+  margin:25px auto;
+  padding:15px;
 }
-
 .card{
-  background:#fff;
+  background:white;
   border-radius:14px;
   padding:22px;
   box-shadow:0 3px 15px #0001;
 }
-
-h1{
-  margin-top:0;
-  color:#173b75;
-}
-
 label{
   font-weight:700;
   display:block;
   margin:12px 0 6px;
 }
-
-input,
-textarea{
+input,textarea{
   width:100%;
+  box-sizing:border-box;
   padding:11px;
   border:1px solid #cbd5e1;
   border-radius:8px;
   font-size:15px;
-  font-family:Arial,sans-serif;
 }
-
-textarea{
-  resize:vertical;
-}
-
 button{
   padding:12px 18px;
   border:0;
   border-radius:8px;
-  cursor:pointer;
-  font-size:15px;
-  margin-top:12px;
-}
-
-.blue{
   background:#2563eb;
-  color:#fff;
-}
-
-.green{
-  background:#15803d;
-  color:#fff;
-}
-
-.gray{
-  background:#e2e8f0;
-  color:#111;
-}
-
-.msg{
-  padding:11px;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
   margin-top:12px;
+}
+button:hover{
+  opacity:.9;
+}
+.msg{
+  margin-top:12px;
+  padding:11px;
   border-radius:8px;
   word-break:break-word;
 }
-
 .ok{
   background:#ecfdf3;
   color:#166534;
 }
-
 .err{
   background:#fef2f2;
   color:#991b1b;
 }
-
-.loading{
-  background:#eff6ff;
-  color:#1d4ed8;
-}
-
-.result{
-  margin-top:15px;
-  padding:15px;
+.link{
+  margin-top:10px;
+  padding:12px;
   background:#f8fafc;
-  border-radius:10px;
-  display:none;
+  border-radius:8px;
+  word-break:break-all;
 }
-
-.success{
-  color:#166534;
-  font-weight:bold;
+.copy{
+  background:#16a34a;
+  margin-left:8px;
 }
-
-@media(max-width:600px){
-
-  .wrap{
-    margin:5px auto;
-    padding:8px;
-  }
-
-  .card{
-    padding:15px;
-    border-radius:10px;
-  }
-
-  h1{
-    font-size:22px;
-  }
-
-  button{
-    width:100%;
-    margin:5px 0;
-  }
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="wrap">
-
 <div class="card">
 
+<h1>School Information – Admin</h1>
 
-<h1>
-Information Entry – Admin
-</h1>
+<label>Admin PIN</label>
+<input id="pin" type="password" value="1234">
 
+<label>सूचना का नाम</label>
+<input id="name" placeholder="Teacher Information">
 
-<label>
-Admin PIN
-</label>
+<label>Columns – एक line में एक</label>
+<textarea id="cols" rows="7"
+placeholder="S.No
+Teacher Name
+Designation
+Subject
+Mobile Number"></textarea>
 
-<input
-  id="pin"
-  type="password"
-  value="1234"
-  placeholder="Admin PIN">
-
-
-<label>
-सूचना का नाम
-</label>
-
-<input
-  id="infoName"
-  type="text"
-  placeholder="जैसे - Topper Information">
-
-
-<label>
-Columns – एक line में एक
-</label>
-
-<textarea
-  id="columns"
-  rows="8"
-  placeholder="S.No
-Student Name
-Father Name
-Marks
-Percentage
-Rank"></textarea>
-
-
-<label>
-Schools – एक line में एक
-</label>
-
-<textarea
-  id="schools"
-  rows="12"
-  placeholder="School 1
+<label>Schools – एक line में एक</label>
+<textarea id="schools" rows="10"
+placeholder="School 1
 School 2
-School 3
-School 4"></textarea>
+School 3"></textarea>
 
-
-<button
-  class="blue"
-  onclick="createInfoForm()">
-
-➕ Create Information Form
-
-</button>
-
-
-<button
-  class="gray"
-  onclick="clearForm()">
-
-Clear
-
-</button>
-
+<button onclick="createForm()">➕ Create School Form</button>
 
 <div id="msg"></div>
 
+<div id="result" style="display:none">
+  <h3>✅ Form तैयार हो गया</h3>
 
-<div id="result"
-     class="result">
-
-  <div class="success">
-    ✅ Information Form Successfully Created
+  <div class="link">
+    <b>School Link:</b><br>
+    <span id="schoolLink"></span>
   </div>
 
-  <br>
-
-  <div>
-    <b>Information Name:</b>
-    <span id="resultName"></span>
-  </div>
-
-  <br>
-
-  <div>
-    <b>Form ID:</b>
-    <span id="resultId"></span>
-  </div>
-
-  <br>
-
-  <div>
-    Google Sheet में नई sheet तैयार हो गई है।
-  </div>
-
-</div>
-
-
+  <button class="copy" onclick="copyLink()">📋 Copy Link</button>
 </div>
 
 </div>
-
+</div>
 
 <script>
 
-
-/* =================================================
-   GOOGLE APPS SCRIPT API
-   ================================================= */
-
 const API =
-"https://script.google.com/macros/s/AKfycbyHb8abCXCQFAhemdCEcoHEo2gx3JL5eq_-X558SQITZXOiJ_ocCnVymLItAB2m2Pr5/exec";
+"https://script.google.com/macros/s/AKfycbx99czGRhevoQAV38jxIG0uDUfuCkC_KkmKluibPbpwSQPj4592gTJnOtPmBrkDWScIGQ/exec";
 
-
-/* =================================================
-   ELEMENT SHORTCUT
-   ================================================= */
-
-const $ = id =>
-document.getElementById(id);
-
-
-/* =================================================
-   MESSAGE
-   ================================================= */
 
 function showMsg(text,type){
 
-  const box = $("msg");
+  const box=document.getElementById("msg");
 
-  box.className = "msg " + type;
+  box.className="msg "+type;
 
-  box.textContent = text;
-
+  box.innerText=text;
 }
 
 
-/* =================================================
-   JSONP API CALL
-   ================================================= */
+function createForm(){
 
-function apiCall(action, params = {}){
+  const pin=document.getElementById("pin").value.trim();
 
-  return new Promise(function(resolve,reject){
+  const name=document.getElementById("name").value.trim();
 
-    const callbackName =
-      "jsonpCallback_" +
-      Date.now() +
-      "_" +
-      Math.floor(
-        Math.random() * 100000
+  const cols=document.getElementById("cols").value.trim();
+
+  const schools=document.getElementById("schools").value.trim();
+
+
+  if(!pin){
+    showMsg("Admin PIN डालें","err");
+    return;
+  }
+
+  if(!name){
+    showMsg("सूचना का नाम डालें","err");
+    return;
+  }
+
+  if(!cols){
+    showMsg("Columns डालें","err");
+    return;
+  }
+
+  if(!schools){
+    showMsg("Schools की list डालें","err");
+    return;
+  }
+
+
+  showMsg("Form बनाया जा रहा है...","ok");
+
+
+  const url =
+    API +
+    "?action=createForm" +
+    "&pin=" + encodeURIComponent(pin) +
+    "&name=" + encodeURIComponent(name) +
+    "&columns=" + encodeURIComponent(cols) +
+    "&schools=" + encodeURIComponent(schools);
+
+
+  fetch(url)
+  .then(response => response.json())
+  .then(data => {
+
+    if(!data.ok){
+
+      showMsg(
+        "Error: " + (data.error || "Unknown error"),
+        "err"
       );
 
-
-    let url =
-      API +
-      "?action=" +
-      encodeURIComponent(action);
-
-
-    Object.keys(params).forEach(function(key){
-
-      url +=
-        "&" +
-        encodeURIComponent(key) +
-        "=" +
-        encodeURIComponent(
-          params[key]
-        );
-
-    });
-
-
-    url +=
-      "&callback=" +
-      callbackName;
-
-
-    const script =
-      document.createElement("script");
-
-
-    let finished = false;
-
-
-    const timer =
-      setTimeout(function(){
-
-        if(finished) return;
-
-        finished = true;
-
-        cleanup();
-
-        reject(
-          new Error(
-            "Google API से response नहीं मिला"
-          )
-        );
-
-      },20000);
-
-
-    function cleanup(){
-
-      clearTimeout(timer);
-
-      if(script.parentNode){
-
-        script.parentNode.removeChild(
-          script
-        );
-
-      }
-
-      try{
-
-        delete window[callbackName];
-
-      }
-      catch(e){}
-
+      return;
     }
 
 
-    window[callbackName] =
-      function(data){
-
-        if(finished) return;
-
-        finished = true;
-
-        cleanup();
-
-        resolve(data);
-
-      };
+    showMsg(
+      "Form successfully create हो गया।",
+      "ok"
+    );
 
 
-    script.onerror =
-      function(){
-
-        if(finished) return;
-
-        finished = true;
-
-        cleanup();
-
-        reject(
-          new Error(
-            "Google API Connection Failed"
-          )
-        );
-
-      };
+    const formId=data.formId;
 
 
-    script.src = url;
+    /*
+      GitHub Pages का current address automatically लिया जाएगा
+      और school.html?form=FORM_ID बनाया जाएगा।
+    */
 
-    document.body.appendChild(script);
+    const base =
+      window.location.origin +
+      window.location.pathname
+        .replace("admin.html","");
+
+
+    const schoolURL =
+      base +
+      "school.html?form=" +
+      encodeURIComponent(formId);
+
+
+    document.getElementById("schoolLink").innerText =
+      schoolURL;
+
+    document.getElementById("result").style.display =
+      "block";
+
+  })
+  .catch(error => {
+
+    showMsg(
+      "Unable to connect to Google Sheet/API. " +
+      error.message,
+      "err"
+    );
 
   });
 
 }
 
 
-/* =================================================
-   CREATE INFORMATION FORM
-   ================================================= */
+function copyLink(){
 
-async function createInfoForm(){
+  const link =
+    document.getElementById("schoolLink").innerText;
 
-  const pin =
-    $("pin").value.trim();
 
+  navigator.clipboard.writeText(link)
+  .then(() => {
 
-  const infoName =
-    $("infoName").value.trim();
+    alert("School Link copy हो गया ✅");
 
+  })
+  .catch(() => {
 
-  const columns =
-    $("columns").value.trim();
+    alert("Link copy नहीं हुआ। Manually select करके copy करें।");
 
-
-  const schools =
-    $("schools").value.trim();
-
-
-  /* VALIDATION */
-
-  if(!pin){
-
-    showMsg(
-      "Admin PIN डालें",
-      "err"
-    );
-
-    return;
-
-  }
-
-
-  if(!infoName){
-
-    showMsg(
-      "Information Name डालें",
-      "err"
-    );
-
-    return;
-
-  }
-
-
-  if(!columns){
-
-    showMsg(
-      "Columns डालें",
-      "err"
-    );
-
-    return;
-
-  }
-
-
-  if(!schools){
-
-    showMsg(
-      "Schools की list डालें",
-      "err"
-    );
-
-    return;
-
-  }
-
-
-  showMsg(
-    "Information Form बनाया जा रहा है...",
-    "loading"
-  );
-
-
-  $("result").style.display =
-    "none";
-
-
-  try{
-
-
-    const data =
-      await apiCall(
-        "createInfoForm",
-        {
-
-          pin:pin,
-
-          infoName:infoName,
-
-          columns:columns,
-
-          schools:schools
-
-        }
-      );
-
-
-    console.log(
-      "CREATE INFORMATION RESPONSE:",
-      data
-    );
-
-
-    if(!data || !data.ok){
-
-      throw new Error(
-        data && data.error
-          ? data.error
-          : "Information Form create नहीं हुआ"
-      );
-
-    }
-
-
-    /* SUCCESS */
-
-    showMsg(
-      "✓ Information Form successfully create हो गया।",
-      "ok"
-    );
-
-
-    $("resultName").textContent =
-      infoName;
-
-
-    $("resultId").textContent =
-      data.formId || "-";
-
-
-    $("result").style.display =
-      "block";
-
-
-  }
-
-  catch(error){
-
-    console.error(
-      "INFORMATION API ERROR:",
-      error
-    );
-
-
-    showMsg(
-      "Google API Connection Failed: " +
-      error.message,
-      "err"
-    );
-
-  }
+  });
 
 }
-
-
-/* =================================================
-   CLEAR
-   ================================================= */
-
-function clearForm(){
-
-  $("infoName").value = "";
-
-  $("columns").value = "";
-
-  $("schools").value = "";
-
-  $("msg").className = "";
-
-  $("msg").textContent = "";
-
-  $("result").style.display =
-    "none";
-
-}
-
-
-/* =================================================
-   START
-   ================================================= */
 
 </script>
 
-
 </body>
-
 </html>
