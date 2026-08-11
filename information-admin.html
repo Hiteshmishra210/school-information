@@ -1,8 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Information Admin</title>
 
@@ -14,376 +19,398 @@
 
 body{
   margin:0;
+  padding:15px;
   font-family:Arial,sans-serif;
-  background:#f3f6fa;
-  color:#1f2937;
+  background:linear-gradient(
+    135deg,
+    #eef4ff,
+    #f8fbff
+  );
+  color:#1e293b;
 }
 
-.wrap{
+.container{
+  width:100%;
   max-width:900px;
   margin:20px auto;
-  padding:15px;
 }
 
 .card{
   background:#fff;
-  border-radius:16px;
+  border-radius:18px;
   padding:22px;
-  box-shadow:0 4px 18px #0002;
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.10);
 }
 
 h1{
-  margin-top:0;
-  color:#1d4ed8;
+  margin:0 0 8px;
+  color:#173b75;
+  font-size:28px;
 }
 
-h2{
-  margin-top:25px;
+.subtitle{
+  color:#64748b;
+  margin-bottom:25px;
 }
 
 label{
   display:block;
-  font-weight:bold;
-  margin:14px 0 6px;
+  margin-top:16px;
+  margin-bottom:7px;
+  font-weight:700;
 }
 
 input,
-textarea,
-select{
+textarea{
   width:100%;
-  padding:12px;
+  padding:13px;
   border:1px solid #cbd5e1;
-  border-radius:9px;
-  font-size:15px;
+  border-radius:10px;
+  font-size:16px;
+  font-family:Arial,sans-serif;
   outline:none;
+}
+
+input:focus,
+textarea:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 3px #2563eb18;
 }
 
 textarea{
   resize:vertical;
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-  border-color:#2563eb;
+  min-height:130px;
+  line-height:1.5;
 }
 
 button{
   border:0;
-  border-radius:9px;
-  padding:12px 18px;
-  margin-top:12px;
-  font-size:15px;
-  font-weight:bold;
+  border-radius:10px;
+  padding:13px 18px;
+  margin-top:18px;
+  font-size:16px;
+  font-weight:700;
   cursor:pointer;
+}
+
+.create{
+  width:100%;
   background:#2563eb;
-  color:white;
+  color:#fff;
 }
 
-button:hover{
-  opacity:.9;
+.create:hover{
+  background:#1d4ed8;
 }
 
-.green{
+.copy{
   background:#16a34a;
+  color:#fff;
+  margin-right:8px;
 }
 
-.orange{
-  background:#ea580c;
-}
-
-.gray{
-  background:#64748b;
-}
-
-.red{
-  background:#dc2626;
+.open{
+  background:#475569;
+  color:#fff;
 }
 
 .msg{
-  margin-top:15px;
-  padding:12px;
-  border-radius:9px;
   display:none;
+  margin-top:18px;
+  padding:13px;
+  border-radius:10px;
+  font-weight:600;
+  word-break:break-word;
 }
 
-.success{
+.msg.ok{
   display:block;
-  background:#dcfce7;
+  background:#ecfdf5;
   color:#166534;
 }
 
-.error{
+.msg.err{
   display:block;
-  background:#fee2e2;
+  background:#fef2f2;
   color:#991b1b;
 }
 
-.info{
+.msg.loading{
   display:block;
-  background:#dbeafe;
-  color:#1e40af;
-}
-
-.hidden{
-  display:none;
-}
-
-.schoolBox{
-  margin-top:20px;
-  padding:18px;
-  border:1px solid #dbe3ee;
-  border-radius:12px;
-  background:#f8fafc;
-}
-
-.schoolTitle{
-  font-size:20px;
-  font-weight:bold;
+  background:#eff6ff;
   color:#1d4ed8;
-  margin-bottom:15px;
 }
 
-.progress{
+.result{
+  display:none;
+  margin-top:25px;
+  padding:18px;
+  border-radius:14px;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+}
+
+.result h2{
+  margin-top:0;
+  color:#166534;
+}
+
+.form-id{
+  background:#fff;
+  border:1px solid #cbd5e1;
+  padding:12px;
+  border-radius:8px;
+  word-break:break-all;
+  margin-top:10px;
+}
+
+.link-box{
+  background:#fff;
+  border:1px solid #cbd5e1;
+  padding:12px;
+  border-radius:8px;
+  word-break:break-all;
   margin-top:10px;
   font-size:14px;
-  color:#475569;
 }
 
-.entry{
-  margin-bottom:15px;
-}
-
-.entry label{
-  margin-top:0;
-}
-
-.topInfo{
-  background:#eff6ff;
-  padding:14px;
+.note{
+  margin-top:18px;
+  padding:12px;
+  background:#fff7ed;
+  color:#9a3412;
   border-radius:10px;
-  margin-bottom:15px;
-}
-
-.actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.summary{
-  margin-top:20px;
-  padding:15px;
-  background:#f8fafc;
-  border-radius:10px;
-}
-
-.summaryRow{
-  display:flex;
-  justify-content:space-between;
-  padding:8px 0;
-  border-bottom:1px solid #e2e8f0;
+  font-size:14px;
+  line-height:1.5;
 }
 
 @media(max-width:600px){
 
-  .wrap{
-    margin:0;
-    padding:8px;
+  body{
+    padding:10px;
+  }
+
+  .container{
+    margin:5px auto;
   }
 
   .card{
-    padding:16px;
-    border-radius:10px;
+    padding:17px;
+    border-radius:14px;
+  }
+
+  h1{
+    font-size:23px;
   }
 
   button{
     width:100%;
+    margin-left:0 !important;
+    margin-right:0 !important;
   }
 
 }
 
 </style>
-</head>
 
+</head>
 
 <body>
 
-<div class="wrap">
+<div class="container">
 
 <div class="card">
 
 <h1>📋 Information Admin</h1>
 
-<div id="msg" class="msg"></div>
+<div class="subtitle">
+School Information Form बनाने के लिए नीचे की जानकारी भरें।
+</div>
 
 
-<!-- ================================================= -->
-<!-- CREATE FORM -->
-<!-- ================================================= -->
+<!-- =========================
+     ADMIN PIN
+========================= -->
 
-<div id="createSection">
-
-<label>Admin PIN</label>
+<label for="pin">
+🔐 Admin PIN
+</label>
 
 <input
   id="pin"
   type="password"
   value="1234"
-  placeholder="Admin PIN">
+  placeholder="Admin PIN"
+/>
 
 
-<label>Information Name</label>
+<!-- =========================
+     INFORMATION NAME
+========================= -->
+
+<label for="infoName">
+📌 Information Name
+</label>
 
 <input
   id="infoName"
   type="text"
-  placeholder="जैसे: Topper Information">
+  placeholder="जैसे – Topper Information 2026"
+/>
 
 
-<label>Column Names</label>
+<!-- =========================
+     COLUMNS
+========================= -->
+
+<label for="columns">
+📝 Column Names
+</label>
 
 <textarea
   id="columns"
-  rows="8"
-  placeholder="Student Name
+  placeholder="एक line में एक column लिखें
+
+जैसे:
+
+Student Name
 Father Name
 Class
 Marks
-Percentage"></textarea>
+Percentage"
+></textarea>
 
 
-<label>School Names</label>
+<!-- =========================
+     SCHOOLS
+========================= -->
+
+<label for="schools">
+🏫 School Names
+</label>
 
 <textarea
   id="schools"
-  rows="10"
-  placeholder="School 1
-School 2
-School 3
-School 4"></textarea>
+  placeholder="एक line में एक School का नाम लिखें
+
+जैसे:
+
+Government School 1
+Government School 2
+Government School 3"
+></textarea>
 
 
-<button onclick="createForm()">
+<!-- =========================
+     CREATE BUTTON
+========================= -->
+
+<button
+  class="create"
+  onclick="createInfoForm()"
+>
 ➕ Create Information Form
 </button>
 
-</div>
+
+<!-- =========================
+     MESSAGE
+========================= -->
+
+<div
+  id="msg"
+  class="msg"
+></div>
 
 
+<!-- =========================
+     RESULT
+========================= -->
 
-<!-- ================================================= -->
-<!-- FORM ENTRY -->
-<!-- ================================================= -->
+<div
+  id="result"
+  class="result"
+>
 
-<div id="entrySection" class="hidden">
+<h2>
+✅ Information Form तैयार हो गया
+</h2>
 
-<div class="topInfo">
-
-<div>
-<b>Information:</b>
-<span id="showInfoName"></span>
-</div>
-
-<div class="progress">
-School <span id="currentSchoolNo">1</span>
-of
-<span id="totalSchools">0</span>
-</div>
-
-</div>
+<p>
+नीचे दिया गया School Form Link schools को भेज सकते हैं।
+</p>
 
 
-<div id="schoolBox" class="schoolBox">
+<strong>
+Form ID:
+</strong>
 
-<div class="schoolTitle">
-<span id="schoolName"></span>
-</div>
+<div
+  id="formId"
+  class="form-id"
+></div>
 
-<div id="fields"></div>
 
-<div class="actions">
+<strong style="display:block;margin-top:15px;">
+School Form Link:
+</strong>
+
+<div
+  id="schoolLink"
+  class="link-box"
+></div>
+
 
 <button
-  class="green"
-  onclick="saveNext()">
-💾 Save & Next School
+  class="copy"
+  onclick="copyLink()"
+>
+📋 Copy Link
 </button>
 
-<button
-  class="gray"
-  onclick="previousSchool()">
-⬅ Previous
-</button>
-
-</div>
-
-</div>
-
-
-<div class="summary">
-
-<h3>School Progress</h3>
-
-<div id="summaryList"></div>
-
-</div>
-
-
-<div class="actions">
 
 <button
-  class="green"
-  onclick="submitAll()">
-✅ Submit All Information
-</button>
-
-<button
-  class="orange"
-  onclick="printPreview()">
-🖨 Print
+  class="open"
+  onclick="openForm()"
+>
+🔗 Open Form
 </button>
 
 </div>
 
+
+<div class="note">
+
+<b>ध्यान दें:</b><br>
+
+• Information Name ऊपर डालें।<br>
+• Columns एक-एक line में डालें।<br>
+• Schools भी एक-एक line में डालें।<br>
+• Duplicate School/Column अपने आप हट जाएंगे।<br>
+• Form बनने के बाद School Form Link मिलेगा।
+
 </div>
 
-
 </div>
 
 </div>
-
 
 
 <script>
 
 
-// =====================================================
-// API
-// =====================================================
+/* =====================================================
+   NEW INFORMATION API
+===================================================== */
 
 const API =
 "https://script.google.com/macros/s/AKfycbyHb8abCXCQFAhemdCEcoHEo2gx3JL5eq_-X558SQITZXOiJ_ocCnVymLItAB2m2Pr5/exec";
 
 
-// =====================================================
-// VARIABLES
-// =====================================================
-
-let formId = "";
-
-let formData = null;
-
-let currentSchool = 0;
-
-let allData = [];
-
-let jsonpCounter = 0;
-
-
-// =====================================================
-// MESSAGE
-// =====================================================
+/* =====================================================
+   SHOW MESSAGE
+===================================================== */
 
 function showMsg(text,type){
 
@@ -393,15 +420,16 @@ function showMsg(text,type){
   box.className =
     "msg " + type;
 
-  box.innerText =
+  box.textContent =
     text;
 
 }
 
 
-// =====================================================
-// JSONP API
-// =====================================================
+/* =====================================================
+   JSONP API
+   MOBILE FRIENDLY
+===================================================== */
 
 function apiCall(params){
 
@@ -409,104 +437,169 @@ function apiCall(params){
     function(resolve,reject){
 
       const callbackName =
-        "apiCallback_" +
+        "googleApi_" +
         Date.now() +
         "_" +
-        (++jsonpCounter);
-
-
-      params.callback =
-        callbackName;
-
-
-      const query =
-        Object.keys(params)
-          .map(
-            function(key){
-
-              return (
-                encodeURIComponent(key) +
-                "=" +
-                encodeURIComponent(
-                  params[key]
-                )
-              );
-
-            }
-          )
-          .join("&");
+        Math.floor(
+          Math.random() * 999999
+        );
 
 
       const script =
         document.createElement("script");
 
 
-      const timeout =
-        setTimeout(
-          function(){
-
-            cleanup();
-
-            reject(
-              new Error(
-                "Google API response नहीं आया"
-              )
-            );
-
-          },
-          20000
-        );
-
-
-      window[callbackName] =
-        function(data){
-
-          clearTimeout(timeout);
-
-          cleanup();
-
-          resolve(data);
-
-        };
+      let finished = false;
 
 
       function cleanup(){
 
-        try{
-          delete window[callbackName];
-        }catch(e){}
+        if(
+          script.parentNode
+        ){
 
-        if(script.parentNode){
-          script.parentNode.removeChild(script);
+          script.parentNode.removeChild(
+            script
+          );
+
         }
+
+        try{
+
+          delete window[
+            callbackName
+          ];
+
+        }catch(e){}
 
       }
 
 
-      script.onerror =
-        function(){
+      function success(data){
 
-          clearTimeout(timeout);
+        if(finished){
 
-          cleanup();
+          return;
 
-          reject(
-            new Error(
-              "Google API connection failed"
-            )
-          );
+        }
 
-        };
+
+        finished = true;
+
+        cleanup();
+
+        resolve(data);
+
+      }
+
+
+      function fail(message){
+
+        if(finished){
+
+          return;
+
+        }
+
+
+        finished = true;
+
+        cleanup();
+
+        reject(
+          new Error(message)
+        );
+
+      }
+
+
+      window[
+        callbackName
+      ] = success;
+
+
+      const query = [];
+
+
+      Object.keys(params)
+        .forEach(
+          function(key){
+
+            query.push(
+              encodeURIComponent(key) +
+              "=" +
+              encodeURIComponent(
+                params[key]
+              )
+            );
+
+          }
+        );
+
+
+      query.push(
+        "callback=" +
+        encodeURIComponent(
+          callbackName
+        )
+      );
+
+
+      /*
+        CACHE BUSTING
+
+        Mobile browser को
+        पुराना response use करने
+        से रोकता है।
+      */
+
+      query.push(
+        "_=" +
+        Date.now()
+      );
 
 
       script.src =
         API +
         "?" +
-        query;
+        query.join("&");
+
+
+      script.async = true;
+
+
+      script.onerror =
+        function(){
+
+          fail(
+            "Google API connection failed"
+          );
+
+        };
 
 
       document.body.appendChild(
         script
+      );
+
+
+      /*
+        30 second timeout
+      */
+
+      setTimeout(
+        function(){
+
+          if(!finished){
+
+            fail(
+              "Google API response नहीं आया। Internet या API deployment check करें।"
+            );
+
+          }
+
+        },
+        30000
       );
 
     }
@@ -515,12 +608,11 @@ function apiCall(params){
 }
 
 
+/* =====================================================
+   CREATE INFORMATION FORM
+===================================================== */
 
-// =====================================================
-// CREATE FORM
-// =====================================================
-
-async function createForm(){
+async function createInfoForm(){
 
   const pin =
     document
@@ -550,11 +642,16 @@ async function createForm(){
       .trim();
 
 
+  /* =========================
+     VALIDATION
+  ========================= */
+
+
   if(!pin){
 
     showMsg(
-      "Admin PIN डालें",
-      "error"
+      "Admin PIN डालें।",
+      "err"
     );
 
     return;
@@ -565,9 +662,13 @@ async function createForm(){
   if(!infoName){
 
     showMsg(
-      "Information Name डालें",
-      "error"
+      "Information Name डालें।",
+      "err"
     );
+
+    document
+      .getElementById("infoName")
+      .focus();
 
     return;
 
@@ -577,9 +678,13 @@ async function createForm(){
   if(!columns){
 
     showMsg(
-      "Column Names डालें",
-      "error"
+      "कम से कम एक Column डालें।",
+      "err"
     );
+
+    document
+      .getElementById("columns")
+      .focus();
 
     return;
 
@@ -589,22 +694,40 @@ async function createForm(){
   if(!schools){
 
     showMsg(
-      "School Names डालें",
-      "error"
+      "कम से कम एक School डालें।",
+      "err"
     );
+
+    document
+      .getElementById("schools")
+      .focus();
 
     return;
 
   }
 
 
+  /* =========================
+     LOADING
+  ========================= */
+
   showMsg(
-    "Information Form बनाया जा रहा है...",
-    "info"
+    "⏳ Information Form बनाया जा रहा है...",
+    "loading"
   );
 
 
+  document
+    .querySelector(".create")
+    .disabled = true;
+
+
   try{
+
+
+    /* =========================
+       API CALL
+    ========================= */
 
     const result =
       await apiCall({
@@ -627,741 +750,287 @@ async function createForm(){
       });
 
 
-    if(!result || !result.ok){
+    console.log(
+      "CREATE RESPONSE:",
+      result
+    );
+
+
+    /* =========================
+       ERROR
+    ========================= */
+
+    if(
+      !result ||
+      !result.ok
+    ){
 
       throw new Error(
         result &&
         result.error
           ? result.error
-          : "Form create नहीं हुआ"
+          : "Form create नहीं हुआ।"
       );
 
     }
 
 
-    formId =
+    /* =========================
+       FORM ID
+    ========================= */
+
+    const formId =
       result.formId;
 
 
-    await loadForm();
+    if(!formId){
+
+      throw new Error(
+        "Google API ने Form ID नहीं दिया।"
+      );
+
+    }
 
 
-  }
+    /* =========================
+       SCHOOL LINK
+    ========================= */
 
-  catch(error){
+    /*
+      GitHub Pages का current
+      location automatically लिया जाएगा।
+    */
+
+    const currentPath =
+      window.location.pathname;
+
+
+    const base =
+      window.location.origin +
+      currentPath.substring(
+        0,
+        currentPath.lastIndexOf("/") + 1
+      );
+
+
+    const schoolURL =
+      base +
+      "information.html?form=" +
+      encodeURIComponent(
+        formId
+      );
+
+
+    /* =========================
+       SHOW RESULT
+    ========================= */
+
+    document
+      .getElementById("formId")
+      .textContent =
+      formId;
+
+
+    document
+      .getElementById("schoolLink")
+      .textContent =
+      schoolURL;
+
+
+    document
+      .getElementById("result")
+      .style.display =
+      "block";
+
 
     showMsg(
-      "Error: " +
-      error.message,
-      "error"
+      "✅ Information Form successfully create हो गया।",
+      "ok"
     );
 
-  }
 
-}
+    /*
+      नीचे result तक scroll
+    */
 
-
-
-// =====================================================
-// LOAD FORM
-// =====================================================
-
-async function loadForm(){
-
-  showMsg(
-    "Form information लोड हो रही है...",
-    "info"
-  );
-
-
-  try{
-
-    const result =
-      await apiCall({
-
-        action:
-          "getInfoForm",
-
-        formId:
-          formId
-
+    document
+      .getElementById("result")
+      .scrollIntoView({
+        behavior:"smooth"
       });
 
 
-    if(!result || !result.ok){
-
-      throw new Error(
-        result &&
-        result.error
-          ? result.error
-          : "Form नहीं मिला"
-      );
-
-    }
-
-
-    formData =
-      result.form;
-
-
-    allData =
-      formData.schools.map(
-        function(school){
-
-          return {
-
-            school:
-              school,
-
-            values:
-              formData.columns.map(
-                function(){
-
-                  return "";
-
-                }
-              )
-
-          };
-
-        }
-      );
-
-
-    currentSchool = 0;
-
-
-    document
-      .getElementById(
-        "createSection"
-      )
-      .classList
-      .add("hidden");
-
-
-    document
-      .getElementById(
-        "entrySection"
-      )
-      .classList
-      .remove("hidden");
-
-
-    document
-      .getElementById(
-        "showInfoName"
-      )
-      .innerText =
-      formData.infoName;
-
-
-    document
-      .getElementById(
-        "totalSchools"
-      )
-      .innerText =
-      formData.schools.length;
-
-
-    renderSchool();
-
-    updateSummary();
-
-
-    showMsg(
-      "Form तैयार है। अब School की information भरें।",
-      "success"
-    );
-
   }
 
   catch(error){
 
-    showMsg(
-      "Error: " +
-      error.message,
-      "error"
+    console.error(
+      "API ERROR:",
+      error
     );
+
+
+    showMsg(
+      "❌ " +
+      error.message,
+      "err"
+    );
+
+  }
+
+  finally{
+
+    document
+      .querySelector(".create")
+      .disabled = false;
 
   }
 
 }
 
 
+/* =====================================================
+   COPY LINK
+===================================================== */
 
-// =====================================================
-// RENDER SCHOOL
-// =====================================================
+function copyLink(){
 
-function renderSchool(){
-
-  const school =
-    formData.schools[
-      currentSchool
-    ];
-
-
-  document
-    .getElementById(
-      "schoolName"
-    )
-    .innerText =
-    school;
-
-
-  document
-    .getElementById(
-      "currentSchoolNo"
-    )
-    .innerText =
-    currentSchool + 1;
-
-
-  const fields =
+  const link =
     document
-      .getElementById(
-        "fields"
-      );
+      .getElementById("schoolLink")
+      .textContent
+      .trim();
 
 
-  fields.innerHTML =
-    "";
+  if(!link){
 
-
-  const saved =
-    allData[currentSchool]
-      .values;
-
-
-  formData.columns.forEach(
-    function(column,index){
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-
-      div.className =
-        "entry";
-
-
-      const label =
-        document.createElement(
-          "label"
-        );
-
-
-      label.innerText =
-        column;
-
-
-      const input =
-        document.createElement(
-          "input"
-        );
-
-
-      input.type =
-        "text";
-
-
-      input.dataset.index =
-        index;
-
-
-      input.value =
-        saved[index] || "";
-
-
-      input.placeholder =
-        column;
-
-
-      div.appendChild(
-        label
-      );
-
-
-      div.appendChild(
-        input
-      );
-
-
-      fields.appendChild(
-        div
-      );
-
-    }
-  );
-
-}
-
-
-
-// =====================================================
-// SAVE CURRENT SCHOOL
-// =====================================================
-
-function saveCurrentSchool(){
-
-  const inputs =
-    document.querySelectorAll(
-      "#fields input"
+    alert(
+      "पहले Form create करें।"
     );
 
+    return;
 
-  const values =
-    [];
-
-
-  inputs.forEach(
-    function(input){
-
-      values.push(
-        input.value.trim()
-      );
-
-    }
-  );
+  }
 
 
-  allData[currentSchool]
-    .values =
-    values;
-
-}
-
-
-
-// =====================================================
-// SAVE & NEXT
-// =====================================================
-
-function saveNext(){
-
-  saveCurrentSchool();
-
+  /*
+    Modern clipboard
+  */
 
   if(
-    currentSchool <
-    formData.schools.length - 1
+    navigator.clipboard &&
+    window.isSecureContext
   ){
 
-    currentSchool++;
+    navigator.clipboard
+      .writeText(link)
+      .then(
+        function(){
 
-    renderSchool();
+          alert(
+            "✅ School Form Link copy हो गया।"
+          );
 
-    updateSummary();
+        }
+      )
+      .catch(
+        function(){
 
-    showMsg(
-      "अगले School पर चले गए।",
-      "success"
-    );
+          fallbackCopy(link);
+
+        }
+      );
 
   }
 
   else{
 
-    updateSummary();
-
-    showMsg(
-      "सभी Schools की entry पूरी हो गई। अब Submit All कर सकते हैं।",
-      "success"
-    );
+    fallbackCopy(link);
 
   }
 
 }
 
 
+/* =====================================================
+   FALLBACK COPY
+===================================================== */
 
-// =====================================================
-// PREVIOUS
-// =====================================================
+function fallbackCopy(text){
 
-function previousSchool(){
-
-  saveCurrentSchool();
-
-
-  if(currentSchool > 0){
-
-    currentSchool--;
-
-    renderSchool();
-
-    updateSummary();
-
-  }
-
-}
-
-
-
-// =====================================================
-// SUMMARY
-// =====================================================
-
-function updateSummary(){
-
-  const box =
-    document.getElementById(
-      "summaryList"
+  const input =
+    document.createElement(
+      "textarea"
     );
 
 
-  box.innerHTML =
-    "";
+  input.value =
+    text;
 
 
-  allData.forEach(
-    function(row,index){
+  input.style.position =
+    "fixed";
 
-      const filled =
-        row.values.some(
-          function(value){
-
-            return String(
-              value || ""
-            ).trim() !== "";
-
-          }
-        );
+  input.style.left =
+    "-9999px";
 
 
-      const div =
-        document.createElement(
-          "div"
-        );
-
-
-      div.className =
-        "summaryRow";
-
-
-      const name =
-        document.createElement(
-          "span"
-        );
-
-
-      name.innerText =
-        row.school;
-
-
-      const status =
-        document.createElement(
-          "span"
-        );
-
-
-      status.innerText =
-        filled
-          ? "✅ Information भरी गई"
-          : "⏳ बाकी";
-
-
-      div.appendChild(
-        name
-      );
-
-
-      div.appendChild(
-        status
-      );
-
-
-      box.appendChild(
-        div
-      );
-
-    }
+  document.body.appendChild(
+    input
   );
 
-}
 
+  input.focus();
 
-
-// =====================================================
-// SUBMIT ALL
-// =====================================================
-
-async function submitAll(){
-
-  saveCurrentSchool();
-
-  updateSummary();
-
-
-  const hasAny =
-    allData.some(
-      function(row){
-
-        return row.values.some(
-          function(value){
-
-            return String(
-              value || ""
-            ).trim() !== "";
-
-          }
-        );
-
-      }
-    );
-
-
-  if(!hasAny){
-
-    showMsg(
-      "कम से कम एक School की information भरें।",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  const pin =
-    document
-      .getElementById(
-        "pin"
-      )
-      .value
-      .trim();
-
-
-  if(!pin){
-
-    showMsg(
-      "Admin PIN missing है।",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if(
-    !confirm(
-      "क्या सभी information Google Sheet में Submit करनी है?"
-    )
-  ){
-
-    return;
-
-  }
-
-
-  showMsg(
-    "Information Google Sheet में save हो रही है...",
-    "info"
-  );
+  input.select();
 
 
   try{
 
-    const result =
-      await apiCall({
-
-        action:
-          "submitInfo",
-
-        pin:
-          pin,
-
-        formId:
-          formId,
-
-        data:
-          JSON.stringify(
-            allData
-          )
-
-      });
-
-
-    if(!result || !result.ok){
-
-      throw new Error(
-        result &&
-        result.error
-          ? result.error
-          : "Submit failed"
-      );
-
-    }
-
-
-    showMsg(
-      "✅ सभी information Google Sheet में save हो गई।",
-      "success"
+    document.execCommand(
+      "copy"
     );
 
 
     alert(
-      "सभी information successfully Google Sheet में save हो गई।"
+      "✅ Link copy हो गया।"
     );
 
   }
 
-  catch(error){
+  catch(e){
 
-    showMsg(
-      "Submit Error: " +
-      error.message,
-      "error"
+    alert(
+      "Link copy नहीं हुआ। Link को manually copy करें।"
     );
 
   }
+
+
+  document.body.removeChild(
+    input
+  );
 
 }
 
 
+/* =====================================================
+   OPEN FORM
+===================================================== */
 
-// =====================================================
-// PRINT
-// =====================================================
+function openForm(){
 
-function printPreview(){
-
-  saveCurrentSchool();
-
-
-  if(!formData){
-
-    return;
-
-  }
+  const link =
+    document
+      .getElementById("schoolLink")
+      .textContent
+      .trim();
 
 
-  let html = "";
-
-  html +=
-    "<html><head><title>" +
-    escapeHtml(
-      formData.infoName
-    ) +
-    "</title>";
-
-
-  html +=
-    "<style>" +
-
-    "body{font-family:Arial;padding:20px;}" +
-
-    "h1{text-align:center;}" +
-
-    "table{width:100%;border-collapse:collapse;margin-top:20px;}" +
-
-    "th,td{border:1px solid #333;padding:8px;text-align:left;}" +
-
-    "th{font-weight:bold;}" +
-
-    "@media print{button{display:none;}}" +
-
-    "</style>";
-
-  html +=
-    "</head><body>";
-
-
-  html +=
-    "<h1>" +
-    escapeHtml(
-      formData.infoName
-    ) +
-    "</h1>";
-
-
-  html +=
-    "<table>";
-
-
-  html +=
-    "<tr><th>School Name</th>";
-
-
-  formData.columns.forEach(
-    function(column){
-
-      html +=
-        "<th>" +
-        escapeHtml(
-          column
-        ) +
-        "</th>";
-
-    }
-  );
-
-
-  html +=
-    "</tr>";
-
-
-  allData.forEach(
-    function(row){
-
-      html +=
-        "<tr>";
-
-
-      html +=
-        "<td>" +
-        escapeHtml(
-          row.school
-        ) +
-        "</td>";
-
-
-      formData.columns.forEach(
-        function(_,index){
-
-          html +=
-            "<td>" +
-            escapeHtml(
-              row.values[index] || ""
-            ) +
-            "</td>";
-
-        }
-      );
-
-
-      html +=
-        "</tr>";
-
-    }
-  );
-
-
-  html +=
-    "</table>";
-
-
-  html +=
-    "<br><button onclick='window.print()'>Print</button>";
-
-
-  html +=
-    "</body></html>";
-
-
-  const win =
-    window.open(
-      "",
-      "_blank"
-    );
-
-
-  if(!win){
+  if(!link){
 
     alert(
-      "Popup blocked है। Browser में popup allow करें।"
+      "पहले Form create करें।"
     );
 
     return;
@@ -1369,45 +1038,9 @@ function printPreview(){
   }
 
 
-  win.document.write(
-    html
-  );
-
-
-  win.document.close();
-
-}
-
-
-
-// =====================================================
-// ESCAPE HTML
-// =====================================================
-
-function escapeHtml(value){
-
-  return String(
-    value ?? ""
-  )
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-  .replace(
-    /</g,
-    "&lt;"
-  )
-  .replace(
-    />/g,
-    "&gt;"
-  )
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-  .replace(
-    /'/g,
-    "&#039;"
+  window.open(
+    link,
+    "_blank"
   );
 
 }
