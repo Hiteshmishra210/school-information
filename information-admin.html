@@ -1,0 +1,1717 @@
+<!doctype html>
+
+<html lang="hi">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>Information Entry Admin</title>
+
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+
+  margin:0;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  background:#f3f6fa;
+
+  color:#222;
+
+}
+
+
+.wrap{
+
+  max-width:1000px;
+
+  margin:auto;
+
+  padding:15px;
+
+}
+
+
+.card{
+
+  background:white;
+
+  border-radius:14px;
+
+  padding:20px;
+
+  margin-bottom:18px;
+
+  box-shadow:
+    0 3px 15px #0001;
+
+}
+
+
+h1{
+
+  margin-top:0;
+
+  color:#17365d;
+
+}
+
+
+h2{
+
+  color:#17365d;
+
+}
+
+
+label{
+
+  display:block;
+
+  font-weight:bold;
+
+  margin:
+    14px 0 6px;
+
+}
+
+
+input,
+textarea,
+select{
+
+  width:100%;
+
+  padding:11px;
+
+  border:
+    1px solid #cbd5e1;
+
+  border-radius:8px;
+
+  font-size:16px;
+
+}
+
+
+textarea{
+
+  resize:vertical;
+
+}
+
+
+button{
+
+  border:0;
+
+  border-radius:8px;
+
+  padding:
+    12px 18px;
+
+  font-size:16px;
+
+  cursor:pointer;
+
+  color:white;
+
+  background:#2563eb;
+
+  margin-top:12px;
+
+}
+
+
+button:hover{
+
+  opacity:.9;
+
+}
+
+
+.green{
+
+  background:#16a34a;
+
+}
+
+
+.orange{
+
+  background:#ea580c;
+
+}
+
+
+.gray{
+
+  background:#475569;
+
+}
+
+
+.red{
+
+  background:#dc2626;
+
+}
+
+
+.msg{
+
+  margin-top:12px;
+
+  padding:11px;
+
+  border-radius:8px;
+
+}
+
+
+.ok{
+
+  background:#ecfdf3;
+
+  color:#166534;
+
+}
+
+
+.err{
+
+  background:#fef2f2;
+
+  color:#991b1b;
+
+}
+
+
+.hidden{
+
+  display:none;
+
+}
+
+
+.info-title{
+
+  background:#17365d;
+
+  color:white;
+
+  padding:14px;
+
+  border-radius:10px;
+
+  font-size:20px;
+
+  font-weight:bold;
+
+  margin-bottom:15px;
+
+}
+
+
+.school-box{
+
+  background:#eff6ff;
+
+  border-radius:10px;
+
+  padding:15px;
+
+  margin-bottom:18px;
+
+}
+
+
+.school-box select{
+
+  font-weight:bold;
+
+}
+
+
+.field{
+
+  margin-bottom:14px;
+
+}
+
+
+.field label{
+
+  margin-top:0;
+
+}
+
+
+.field input{
+
+  background:#fff;
+
+}
+
+
+.progress{
+
+  margin-top:10px;
+
+  font-weight:bold;
+
+  color:#475569;
+
+}
+
+
+.buttons{
+
+  display:flex;
+
+  gap:10px;
+
+  flex-wrap:wrap;
+
+}
+
+
+.print-area{
+
+  overflow:auto;
+
+}
+
+
+#printTable{
+
+  border-collapse:collapse;
+
+  width:100%;
+
+}
+
+
+#printTable th,
+#printTable td{
+
+  border:1px solid #555;
+
+  padding:7px;
+
+}
+
+
+#printTable th{
+
+  background:#eee;
+
+}
+
+
+@media(max-width:600px){
+
+  .wrap{
+
+    padding:10px;
+
+  }
+
+  .card{
+
+    padding:15px;
+
+  }
+
+  button{
+
+    width:100%;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="wrap">
+
+
+<!-- ==================================
+     CREATE FORM
+================================== -->
+
+<div class="card">
+
+<h1>
+  📋 Information Entry Admin
+</h1>
+
+
+<label>
+  Admin PIN
+</label>
+
+<input
+  id="pin"
+  type="password"
+  value="1234"
+>
+
+
+<label>
+  Information Name
+</label>
+
+<input
+  id="infoName"
+  placeholder="जैसे: 10th Topper Information"
+>
+
+
+<label>
+  Column Names
+  <br>
+  <small>
+    एक line में एक column
+  </small>
+</label>
+
+<textarea
+  id="columns"
+  rows="7"
+  placeholder="Student Name
+Father Name
+Marks
+Percentage
+Rank"
+></textarea>
+
+
+<label>
+  School Names
+  <br>
+  <small>
+    एक line में एक school
+  </small>
+</label>
+
+<textarea
+  id="schools"
+  rows="10"
+  placeholder="Government School A
+Government School B
+Government School C"
+></textarea>
+
+
+<button
+  onclick="createForm()"
+>
+  ➕ Create Information Form
+</button>
+
+
+<div id="createMsg"></div>
+
+
+</div>
+
+
+
+<!-- ==================================
+     ENTRY SECTION
+================================== -->
+
+<div
+  class="card hidden"
+  id="entrySection"
+>
+
+
+<div
+  class="info-title"
+  id="infoTitle"
+>
+  Information
+</div>
+
+
+
+<div class="school-box">
+
+<label>
+  School Select करें
+</label>
+
+
+<select
+  id="schoolSelect"
+  onchange="loadSchool()"
+>
+
+<option value="">
+  -- School Select करें --
+</option>
+
+</select>
+
+
+<div
+  class="progress"
+  id="progress"
+></div>
+
+</div>
+
+
+
+<div
+  id="fields"
+></div>
+
+
+
+<div class="buttons">
+
+
+<button
+  class="green"
+  onclick="saveNext()"
+>
+  💾 Save & Next School
+</button>
+
+
+<button
+  class="gray"
+  onclick="submitAll()"
+>
+  ✅ Submit All
+</button>
+
+
+<button
+  class="orange"
+  onclick="printReport()"
+>
+  🖨️ Print
+</button>
+
+
+</div>
+
+
+<div
+  id="entryMsg"
+></div>
+
+
+</div>
+
+
+
+<!-- ==================================
+     PRINT AREA
+================================== -->
+
+<div
+  class="card hidden"
+  id="printArea"
+>
+
+<h2 id="printTitle"></h2>
+
+<div class="print-area">
+
+<table id="printTable"></table>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+// =====================================
+// IMPORTANT
+// =====================================
+
+const API =
+"https://script.google.com/macros/s/YOUR_NEW_SCRIPT_ID/exec";
+
+
+// यहाँ अपने नए Apps Script deployment
+// का /exec URL डालना है.
+
+
+
+let FORM = null;
+
+let DATA = {};
+
+let currentSchool = "";
+
+
+
+// =====================================
+// CREATE FORM
+// =====================================
+
+function createForm(){
+
+  const pin =
+    document
+      .getElementById("pin")
+      .value
+      .trim();
+
+
+  const infoName =
+    document
+      .getElementById("infoName")
+      .value
+      .trim();
+
+
+  const columns =
+    document
+      .getElementById("columns")
+      .value
+      .trim();
+
+
+  const schools =
+    document
+      .getElementById("schools")
+      .value
+      .trim();
+
+
+  if(!pin){
+
+    message(
+      "createMsg",
+      "Admin PIN डालें",
+      "err"
+    );
+
+    return;
+
+  }
+
+
+  if(!infoName){
+
+    message(
+      "createMsg",
+      "Information Name डालें",
+      "err"
+    );
+
+    return;
+
+  }
+
+
+  if(!columns){
+
+    message(
+      "createMsg",
+      "Column Names डालें",
+      "err"
+    );
+
+    return;
+
+  }
+
+
+  if(!schools){
+
+    message(
+      "createMsg",
+      "School Names डालें",
+      "err"
+    );
+
+    return;
+
+  }
+
+
+  message(
+    "createMsg",
+    "Information Form बनाया जा रहा है...",
+    "ok"
+  );
+
+
+  const url =
+    API +
+    "?action=createInfoForm" +
+    "&pin=" +
+    encodeURIComponent(pin) +
+    "&infoName=" +
+    encodeURIComponent(infoName) +
+    "&columns=" +
+    encodeURIComponent(columns) +
+    "&schools=" +
+    encodeURIComponent(schools);
+
+
+  jsonp(
+    url,
+    function(res){
+
+      if(!res.ok){
+
+        message(
+          "createMsg",
+          res.error ||
+          "Form create नहीं हुआ",
+          "err"
+        );
+
+        return;
+
+      }
+
+
+      loadForm(
+        res.formId
+      );
+
+    }
+  );
+
+}
+
+
+
+// =====================================
+// LOAD FORM
+// =====================================
+
+function loadForm(formId){
+
+  const url =
+    API +
+    "?action=getInfoForm" +
+    "&formId=" +
+    encodeURIComponent(
+      formId
+    );
+
+
+  jsonp(
+    url,
+    function(res){
+
+      if(!res.ok){
+
+        message(
+          "createMsg",
+          res.error ||
+          "Form load नहीं हुआ",
+          "err"
+        );
+
+        return;
+
+      }
+
+
+      FORM =
+        res.form;
+
+
+      DATA = {};
+
+
+      FORM.schools.forEach(
+        school => {
+
+          DATA[school] =
+            {};
+
+          FORM.columns.forEach(
+            column => {
+
+              DATA[school][column] =
+                "";
+
+            }
+          );
+
+        }
+      );
+
+
+      document
+        .getElementById(
+          "infoTitle"
+        )
+        .innerText =
+        FORM.infoName;
+
+
+      fillSchools();
+
+
+      document
+        .getElementById(
+          "entrySection"
+        )
+        .classList
+        .remove("hidden");
+
+
+      message(
+        "createMsg",
+        "Form तैयार है। अब School select करके information भरें।",
+        "ok"
+      );
+
+    }
+  );
+
+}
+
+
+
+// =====================================
+// SCHOOL DROPDOWN
+// =====================================
+
+function fillSchools(){
+
+  const select =
+    document
+      .getElementById(
+        "schoolSelect"
+      );
+
+
+  select.innerHTML =
+    '<option value="">-- School Select करें --</option>';
+
+
+  FORM.schools.forEach(
+    school => {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        school;
+
+
+      option.textContent =
+        school;
+
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+
+}
+
+
+
+// =====================================
+// LOAD SELECTED SCHOOL
+// =====================================
+
+function loadSchool(){
+
+  const school =
+    document
+      .getElementById(
+        "schoolSelect"
+      )
+      .value;
+
+
+  if(!school){
+
+    document
+      .getElementById(
+        "fields"
+      )
+      .innerHTML =
+      "";
+
+    return;
+
+  }
+
+
+  currentSchool =
+    school;
+
+
+  renderFields();
+
+
+  updateProgress();
+
+}
+
+
+
+// =====================================
+// RENDER FIELDS
+// =====================================
+
+function renderFields(){
+
+  const box =
+    document
+      .getElementById(
+        "fields"
+      );
+
+
+  box.innerHTML =
+    "";
+
+
+  FORM.columns.forEach(
+    column => {
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.className =
+        "field";
+
+
+      const label =
+        document.createElement(
+          "label"
+        );
+
+
+      label.innerText =
+        column;
+
+
+      const input =
+        document.createElement(
+          "input"
+        );
+
+
+      input.type =
+        "text";
+
+
+      input.value =
+        DATA[currentSchool][column] ||
+        "";
+
+
+      input.dataset.column =
+        column;
+
+
+      input.oninput =
+        function(){
+
+          DATA[currentSchool][column] =
+            this.value;
+
+          updateProgress();
+
+        };
+
+
+      div.appendChild(
+        label
+      );
+
+
+      div.appendChild(
+        input
+      );
+
+
+      box.appendChild(
+        div
+      );
+
+    }
+  );
+
+}
+
+
+
+// =====================================
+// SAVE & NEXT
+// =====================================
+
+function saveNext(){
+
+  if(!currentSchool){
+
+    alert(
+      "पहले School select करें।"
+    );
+
+    return;
+
+  }
+
+
+  // inputs से latest data save
+  collectCurrentFields();
+
+
+  const index =
+    FORM.schools.indexOf(
+      currentSchool
+    );
+
+
+  let nextSchool = "";
+
+
+  for(
+    let i = index + 1;
+    i < FORM.schools.length;
+    i++
+  ){
+
+    nextSchool =
+      FORM.schools[i];
+
+    break;
+
+  }
+
+
+  if(!nextSchool){
+
+    alert(
+      "यह आखिरी School है। अब Submit All कर सकते हैं।"
+    );
+
+    updateProgress();
+
+    return;
+
+  }
+
+
+  document
+    .getElementById(
+      "schoolSelect"
+    )
+    .value =
+    nextSchool;
+
+
+  loadSchool();
+
+
+  window.scrollTo(
+    {
+      top:document
+        .getElementById(
+          "entrySection"
+        )
+        .offsetTop,
+      behavior:"smooth"
+    }
+  );
+
+}
+
+
+
+// =====================================
+// COLLECT FIELDS
+// =====================================
+
+function collectCurrentFields(){
+
+  if(!currentSchool)
+    return;
+
+
+  const inputs =
+    document.querySelectorAll(
+      "#fields input"
+    );
+
+
+  inputs.forEach(
+    input => {
+
+      const column =
+        input.dataset.column;
+
+
+      DATA[currentSchool][column] =
+        input.value;
+
+    }
+  );
+
+}
+
+
+
+// =====================================
+// PROGRESS
+// =====================================
+
+function updateProgress(){
+
+  if(!FORM)
+    return;
+
+
+  let completed = 0;
+
+
+  FORM.schools.forEach(
+    school => {
+
+      const values =
+        Object.values(
+          DATA[school]
+        );
+
+
+      const filled =
+        values.some(
+          value =>
+            String(
+              value
+            ).trim() !== ""
+        );
+
+
+      if(filled){
+
+        completed++;
+
+      }
+
+    }
+  );
+
+
+  document
+    .getElementById(
+      "progress"
+    )
+    .innerText =
+    "Information entered: " +
+    completed +
+    " / " +
+    FORM.schools.length +
+    " Schools";
+
+}
+
+
+
+// =====================================
+// SUBMIT ALL
+// =====================================
+
+function submitAll(){
+
+  if(!FORM){
+
+    return;
+
+  }
+
+
+  collectCurrentFields();
+
+
+  const completed =
+    FORM.schools.filter(
+      school => {
+
+        return Object.values(
+          DATA[school]
+        ).some(
+          value =>
+            String(
+              value
+            ).trim() !== ""
+        );
+
+      }
+    );
+
+
+  if(!completed.length){
+
+    alert(
+      "किसी भी School की information नहीं भरी गई।"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !confirm(
+      completed.length +
+      " Schools की information Google Sheet में Submit करनी है?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  message(
+    "entryMsg",
+    "Google Sheet में Submit हो रहा है...",
+    "ok"
+  );
+
+
+  const pin =
+    document
+      .getElementById(
+        "pin"
+      )
+      .value
+      .trim();
+
+
+  const data =
+    FORM.schools.map(
+      school => {
+
+        return {
+
+          school:
+            school,
+
+          values:
+            FORM.columns.map(
+              column =>
+                DATA[school][column] ||
+                ""
+            )
+
+        };
+
+      }
+    );
+
+
+  const url =
+    API +
+    "?action=submitInfo" +
+    "&pin=" +
+    encodeURIComponent(pin) +
+    "&formId=" +
+    encodeURIComponent(
+      FORM.formId
+    ) +
+    "&data=" +
+    encodeURIComponent(
+      JSON.stringify(data)
+    );
+
+
+  jsonp(
+    url,
+    function(res){
+
+      if(!res.ok){
+
+        message(
+          "entryMsg",
+          res.error ||
+          "Submit failed",
+          "err"
+        );
+
+        return;
+
+      }
+
+
+      message(
+        "entryMsg",
+        "✅ सभी information Google Sheet में save हो गई।",
+        "ok"
+      );
+
+
+      alert(
+        "Information successfully submitted ✅"
+      );
+
+
+      preparePrint();
+
+    }
+  );
+
+}
+
+
+
+// =====================================
+// PRINT
+// =====================================
+
+function printReport(){
+
+  collectCurrentFields();
+
+  preparePrint();
+
+
+  setTimeout(
+    function(){
+
+      const printWindow =
+        window.open(
+          "",
+          "_blank"
+        );
+
+
+      if(!printWindow){
+
+        alert(
+          "Popup blocked है। Browser में popup allow करें।"
+        );
+
+        return;
+
+      }
+
+
+      const title =
+        FORM.infoName;
+
+
+      const table =
+        document
+          .getElementById(
+            "printTable"
+          )
+          .outerHTML;
+
+
+      printWindow.document.write(
+        "<html>" +
+        "<head>" +
+
+        "<title>" +
+        escapeHtml(title) +
+        "</title>" +
+
+        "<style>" +
+
+        "body{font-family:Arial;padding:20px;}" +
+
+        "h2{text-align:center;}" +
+
+        "table{border-collapse:collapse;width:100%;}" +
+
+        "th,td{border:1px solid #555;padding:7px;}" +
+
+        "th{background:#eee;}" +
+
+        "</style>" +
+
+        "</head>" +
+
+        "<body>" +
+
+        "<h2>" +
+        escapeHtml(title) +
+        "</h2>" +
+
+        table +
+
+        "</body>" +
+
+        "</html>"
+      );
+
+
+      printWindow.document.close();
+
+
+      printWindow.focus();
+
+
+      setTimeout(
+        function(){
+
+          printWindow.print();
+
+        },
+        500
+      );
+
+    },
+    100
+  );
+
+}
+
+
+
+// =====================================
+// PREPARE PRINT TABLE
+// =====================================
+
+function preparePrint(){
+
+  if(!FORM)
+    return;
+
+
+  const table =
+    document
+      .getElementById(
+        "printTable"
+      );
+
+
+  table.innerHTML =
+    "";
+
+
+  const header =
+    document.createElement(
+      "tr"
+    );
+
+
+  const schoolTh =
+    document.createElement(
+      "th"
+    );
+
+
+  schoolTh.innerText =
+    "School Name";
+
+
+  header.appendChild(
+    schoolTh
+  );
+
+
+  FORM.columns.forEach(
+    column => {
+
+      const th =
+        document.createElement(
+          "th"
+        );
+
+
+      th.innerText =
+        column;
+
+
+      header.appendChild(
+        th
+      );
+
+    }
+  );
+
+
+  table.appendChild(
+    header
+  );
+
+
+
+  FORM.schools.forEach(
+    school => {
+
+      const tr =
+        document.createElement(
+          "tr"
+        );
+
+
+      const schoolTd =
+        document.createElement(
+          "td"
+        );
+
+
+      schoolTd.innerText =
+        school;
+
+
+      tr.appendChild(
+        schoolTd
+      );
+
+
+      FORM.columns.forEach(
+        column => {
+
+          const td =
+            document.createElement(
+              "td"
+            );
+
+
+          td.innerText =
+            DATA[school][column] ||
+            "";
+
+
+          tr.appendChild(
+            td
+          );
+
+        }
+      );
+
+
+      table.appendChild(
+        tr
+      );
+
+    }
+  );
+
+
+
+  document
+    .getElementById(
+      "printTitle"
+    )
+    .innerText =
+    FORM.infoName;
+
+
+  document
+    .getElementById(
+      "printArea"
+    )
+    .classList
+    .remove("hidden");
+
+}
+
+
+
+// =====================================
+// MESSAGE
+// =====================================
+
+function message(
+  id,
+  text,
+  type
+){
+
+  const box =
+    document.getElementById(
+      id
+    );
+
+
+  box.className =
+    "msg " +
+    type;
+
+
+  box.innerText =
+    text;
+
+}
+
+
+
+// =====================================
+// JSONP
+// =====================================
+
+function jsonp(
+  url,
+  callback
+){
+
+  const callbackName =
+    "callback_" +
+    Date.now() +
+    "_" +
+    Math.floor(
+      Math.random() *
+      100000
+    );
+
+
+  let script;
+
+
+  window[callbackName] =
+    function(data){
+
+      try{
+
+        callback(data);
+
+      }
+
+      finally{
+
+        delete window[
+          callbackName
+        ];
+
+        if(script){
+
+          script.remove();
+
+        }
+
+      }
+
+    };
+
+
+  script =
+    document.createElement(
+      "script"
+    );
+
+
+  const separator =
+    url.includes("?")
+      ? "&"
+      : "?";
+
+
+  script.src =
+    url +
+    separator +
+    "callback=" +
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  script.onerror =
+    function(){
+
+      delete window[
+        callbackName
+      ];
+
+
+      script.remove();
+
+
+      callback({
+
+        ok:false,
+
+        error:
+          "Google API connection failed"
+
+      });
+
+    };
+
+
+  document
+    .body
+    .appendChild(
+      script
+    );
+
+}
+
+
+
+// =====================================
+// ESCAPE HTML
+// =====================================
+
+function escapeHtml(text){
+
+  return String(text)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>
