@@ -36,7 +36,69 @@ label{
   display:block;
   margin:10px 0 6px;
 }
+.scroll{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  width:100%;
+}
 
+table{
+  border-collapse:collapse;
+  width:max-content;
+  min-width:100%;
+  table-layout:fixed;
+}
+
+th,td{
+  border:1px solid #d7dee8;
+  padding:8px;
+  vertical-align:middle;
+}
+
+/* सभी information columns बराबर */
+th:not(:last-child),
+td:not(:last-child){
+  width:150px;
+  min-width:150px;
+}
+
+/* Heading */
+th{
+  background:#eef3f8;
+  text-align:left;
+  font-size:17px;
+  line-height:1.35;
+  height:110px;
+  vertical-align:middle;
+  white-space:normal;
+  word-break:break-word;
+}
+
+/* लिखने वाले boxes */
+td input{
+  width:100%;
+  min-width:130px;
+  height:52px;
+  padding:10px;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+  font-size:16px;
+  background:#fff;
+}
+
+/* Delete column */
+th:last-child,
+td:last-child{
+  width:80px;
+  min-width:80px;
+  text-align:center;
+}
+
+td:last-child .btn{
+  margin:0;
+  padding:10px;
+}
 select,input{
   width:100%;
   padding:10px;
