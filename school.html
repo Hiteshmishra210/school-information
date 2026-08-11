@@ -207,35 +207,80 @@ th{
   }
 }
 
-@media print{
+@media print {
 
   .no-print{
-    display:none!important;
+    display:none !important;
   }
 
-  body{
-    background:#fff;
-  }
-
-  .card{
-    box-shadow:none;
-    padding:0;
+  html, body{
+    margin:0 !important;
+    padding:0 !important;
+    width:100% !important;
+    background:#fff !important;
   }
 
   .wrap{
-    margin:0;
-    max-width:none;
+    width:100% !important;
+    max-width:none !important;
+    margin:0 !important;
+    padding:0 !important;
   }
 
-  input{
-    border:0;
-    padding:2px;
+  .card{
+    width:100% !important;
+    box-shadow:none !important;
+    padding:0 !important;
+    margin:0 !important;
   }
 
-  select{
-    border:0;
-    appearance:none;
-    padding:2px;
+  .scroll{
+    overflow:visible !important;
+    width:100% !important;
+  }
+
+  table{
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    table-layout:fixed !important;
+    border-collapse:collapse !important;
+  }
+
+  th,
+  td{
+    width:auto !important;
+    min-width:0 !important;
+    padding:3px !important;
+    font-size:8px !important;
+    line-height:1.15 !important;
+    word-break:break-word !important;
+    overflow-wrap:anywhere !important;
+  }
+
+  th{
+    height:auto !important;
+    white-space:normal !important;
+  }
+
+  td input{
+    width:100% !important;
+    min-width:0 !important;
+    height:auto !important;
+    padding:2px !important;
+    border:0 !important;
+    font-size:8px !important;
+    background:transparent !important;
+  }
+
+  #title{
+    font-size:18px !important;
+    margin:0 0 5px !important;
+  }
+
+  #schoolTitle{
+    font-size:14px !important;
+    margin:4px 0 !important;
   }
 }
 </style>
