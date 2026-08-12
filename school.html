@@ -654,7 +654,7 @@ async function load(){
    ========================================== */
 
 $("school").onchange =
-function(){
+async function(){
 
   if(!this.value){
 
@@ -662,15 +662,108 @@ function(){
       .classList
       .add("hidden");
 
-    $("msg").className =
-      "";
-
-    $("msg").textContent =
-      "";
+    $("msg").className = "";
+    $("msg").textContent = "";
 
     return;
+  }
+
+  $("schoolTitle")
+    .textContent =
+    this.value;
+
+  $("area")
+    .classList
+    .remove("hidden");
+
+  $("msg").className =
+    "msg loading";
+
+  $("msg").textContent =
+    "पहले से भरी information load हो रही है...";
+
+  try {
+
+    const data =
+      await apiCall(
+        "getSchoolRows",
+        {
+          formId: formId,
+          school: this.value
+        }
+      );
+
+    if(!data || !data.ok){
+      throw new Error(
+        data && data.error
+          ? data.error
+          : "Information load नहीं हुई"
+      );
+    }
+
+    if(
+      Array.isArray(data.rows) &&
+      data.rows.length
+    ){
+
+      rows =
+        data.rows.map(function(item){
+
+          return {
+            sheetRow:
+              Number(item.sheetRow || 0),
+
+            values:
+              Array.isArray(item.values)
+                ? item.values
+                : []
+          };
+
+        });
+
+    }
+    else {
+
+      rows = [{
+        sheetRow: 0,
+        values:
+          Array(
+            cfg.columns.length
+          ).fill("")
+      }];
+
+    }
+
+    render();
+
+    $("msg").className = "msg ok";
+
+    $("msg").textContent =
+      "✓ पहले से भरी information load हो गई।";
 
   }
+  catch(error){
+
+    console.error(error);
+
+    rows = [{
+      sheetRow: 0,
+      values:
+        Array(
+          cfg.columns.length
+        ).fill("")
+    }];
+
+    render();
+
+    $("msg").className = "msg err";
+
+    $("msg").textContent =
+      "Information load नहीं हुई: " +
+      error.message;
+  }
+
+};
 
 
   $("schoolTitle")
@@ -710,7 +803,6 @@ function render(){
 
   if(!cfg) return;
 
-
   $("head").innerHTML =
     "<tr>" +
 
@@ -734,7 +826,10 @@ function render(){
   $("body").innerHTML =
 
     rows
-      .map(function(r,i){
+      .map(function(rowObj, i){
+
+        const r =
+          rowObj.values || [];
 
         return (
 
@@ -753,7 +848,7 @@ function render(){
 
                 'oninput="rows[' +
                 i +
-                "][" +
+                '].values[' +
                 j +
                 ']=this.value">' +
 
@@ -767,6 +862,7 @@ function render(){
           '<td class="no-print">' +
 
           '<button class="btn red" ' +
+
           'onclick="delRow(' +
           i +
           ')">' +
@@ -778,7 +874,6 @@ function render(){
           "</td>" +
 
           "</tr>"
-
         );
 
       })
@@ -795,16 +890,18 @@ function addRow(){
 
   if(!cfg) return;
 
+  rows.push({
 
-  rows.push(
-    Array(
-      cfg.columns.length
-    ).fill("")
-  );
+    sheetRow: 0,
 
+    values:
+      Array(
+        cfg.columns.length
+      ).fill("")
+
+  });
 
   render();
-
 }
 
 
@@ -816,26 +913,28 @@ function delRow(i){
 
   if(rows.length > 1){
 
-    rows.splice(
-      i,
-      1
-    );
+    rows.splice(i,1);
 
   }
-  else{
+  else {
 
-    rows[0] =
-      Array(
-        cfg.columns.length
-      ).fill("");
+    rows[0] = {
+
+      sheetRow:
+        rows[0].sheetRow || 0,
+
+      values:
+        Array(
+          cfg.columns.length
+        ).fill("")
+
+    };
 
   }
-
 
   render();
 
 }
-
 
 /* ==========================================
    SUBMIT FORM
@@ -846,7 +945,6 @@ async function submitForm(){
   const school =
     $("school").value;
 
-
   if(!school){
 
     alert(
@@ -854,18 +952,20 @@ async function submitForm(){
     );
 
     return;
-
   }
 
 
   const data =
-    rows.filter(function(r){
+    rows.filter(function(rowObj){
 
-      return r.some(function(v){
+      return (
+        rowObj.values &&
+        rowObj.values.some(function(v){
 
-        return String(v).trim() !== "";
+          return String(v).trim() !== "";
 
-      });
+        })
+      );
 
     });
 
@@ -877,7 +977,6 @@ async function submitForm(){
     );
 
     return;
-
   }
 
 
@@ -894,11 +993,14 @@ async function submitForm(){
       await apiCall(
         "submit",
         {
-          formId:formId,
+          formId:
+            formId,
 
-          school:school,
+          school:
+            school,
 
-          rows:JSON.stringify(data)
+          rows:
+            JSON.stringify(data)
         }
       );
 
@@ -923,27 +1025,70 @@ async function submitForm(){
     }
 
 
+    /*
+      Save सफल होने के बाद
+      Sheet से fresh data फिर load करेंगे।
+    */
+
+    const fresh =
+      await apiCall(
+        "getSchoolRows",
+        {
+          formId:
+            formId,
+
+          school:
+            school
+        }
+      );
+
+
+    if(
+      fresh &&
+      fresh.ok &&
+      Array.isArray(fresh.rows)
+    ){
+
+      rows =
+        fresh.rows.map(function(item){
+
+          return {
+
+            sheetRow:
+              Number(
+                item.sheetRow || 0
+              ),
+
+            values:
+              Array.isArray(item.values)
+                ? item.values
+                : []
+
+          };
+
+        });
+
+    }
+
+
+    render();
+
+
     $("msg").className =
       "msg ok";
 
-
     $("msg").textContent =
-      "✓ " +
-      result.count +
-      " row Google Sheet में save हो गई।";
+      "✓ Information successfully save/update हो गई। " +
+      "नई और पुरानी सभी rows सुरक्षित हैं।";
 
 
   }
   catch(error){
 
-    console.error(
-      error
-    );
-
+    console.error(error);
 
     $("msg").className =
       "msg err";
-
 
     $("msg").textContent =
       "Error: " +
