@@ -1049,6 +1049,22 @@ $("saveMsg").textContent =
   "✓ सभी information Google Sheet में save हो गई। " +
   result.count +
   " School की rows save हुईं।";
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    $("saveMsg").className =
+      "msg err";
+
+    $("saveMsg").textContent =
+      "Google API Connection failed: " +
+      error.message;
+
+  }
+
+}
     
 function printInformation(){
 
