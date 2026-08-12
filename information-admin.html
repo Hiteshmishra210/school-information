@@ -558,246 +558,79 @@ function apiCall(params){
 
 async function createInformation(){
 
-  const pin =
-    $("pin").value.trim();
+  const pin = $("pin").value.trim();
+  const infoName = $("infoName").value.trim();
+  const columns = $("columns").value.trim();
+  const schools = $("schools").value.trim();
 
+  if(!pin){ showMsg("Admin PIN डालें", "err"); return; }
+  if(!infoName){ showMsg("सूचना का नाम डालें", "err"); return; }
+  if(!columns){ showMsg("Columns डालें", "err"); return; }
+  if(!schools){ showMsg("Schools की list डालें", "err"); return; }
 
-  const infoName =
-    $("infoName").value.trim();
-
-
-  const columns =
-    $("columns").value.trim();
-
-
-  const schools =
-    $("schools").value.trim();
-
-
-  /* VALIDATION */
-
-  if(!pin){
-
-    showMsg(
-      "Admin PIN डालें",
-      "err"
-    );
-
-    return;
-
-  }
-
-
-  if(!infoName){
-
-    showMsg(
-      "सूचना का नाम डालें",
-      "err"
-    );
-
-    return;
-
-  }
-
-
-  if(!columns){
-
-    showMsg(
-      "Columns डालें",
-      "err"
-    );
-
-    return;
-
-  }
-
-
-  if(!schools){
-
-    showMsg(
-      "Schools की list डालें",
-      "err"
-    );
-
-    return;
-
-  }
-
-
-  showMsg(
-    "Information तैयार की जा रही है...",
-    "loading"
-  );
-
+  showMsg("Information तैयार की जा रही है...", "loading");
 
   try{
 
-/* =====================================
-   CREATE INFORMATION FORM
-===================================== */
+    const response = await fetch(API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+      },
+      body: new URLSearchParams({
+        action: "createForm",
+        pin: pin,
+        name: infoName,
+        columns: columns,
+        schools: schools
+      }).toString()
+    });
 
-try {
+    const result = await response.json();
 
-  const response = await fetch(API, {
-    method: "POST",
+    console.log("CREATE RESPONSE:", result);
 
-    headers: {
-      "Content-Type":
-        "application/x-www-form-urlencoded;charset=UTF-8"
-    },
+    if(!result || !result.ok){
+      throw new Error(
+        result && result.error
+          ? result.error
+          : "Information create नहीं हुई"
+      );
+    }
 
-    body: new URLSearchParams({
-      action: "createForm",
-      pin: pin,
-      name: infoName,
-      columns: columns,
-      schools: schools
-    }).toString()
-  });
-
-  const result = await response.json();
-
-  console.log(
-    "CREATE RESPONSE:",
-    result
-  );
-
-  if (
-    !result ||
-    !result.ok
-  ) {
-
-    throw new Error(
-      result && result.error
-        ? result.error
-        : "Information create नहीं हुई"
-    );
-
-  }
-
-  // Form ID save करो
-  formId = result.formId;
-
-  // नीचे बनाया हुआ form दिखाओ
-  await loadForm();
-
-}
-
-catch(error) {
-
-  console.error(error);
-
-  $("saveMsg").className =
-    "msg err";
-
-  $("saveMsg").textContent =
-    "Google API Connection failed: " +
-    error.message;
-
-}
-    /* =====================================
-       FORM ID
-    ===================================== */
-
-    formId =
-      result.formId;
-
-
-    /* =====================================
-       FORM DATA LOCAL
-    ===================================== */
+    formId = result.formId;
 
     cfg = {
-
-      infoName:infoName,
-
-      columns:
-        columns
-        .split(/\r?\n/)
-        .map(x => x.trim())
-        .filter(Boolean),
-
-      schools:
-        schools
-        .split(/\r?\n/)
-        .map(x => x.trim())
-        .filter(Boolean)
-
+      infoName: infoName,
+      columns: columns.split(/\r?\n/).map(x => x.trim()).filter(Boolean),
+      schools: schools.split(/\r?\n/).map(x => x.trim()).filter(Boolean)
     };
 
+    cfg.columns = [...new Set(cfg.columns)];
+    cfg.schools = [...new Set(cfg.schools)];
 
-    /* REMOVE DUPLICATES */
+    tableData = cfg.schools.map(function(){
+      return Array(cfg.columns.length).fill("");
+    });
 
-    cfg.columns =
-      [...new Set(cfg.columns)];
-
-
-    cfg.schools =
-      [...new Set(cfg.schools)];
-
-
-    /* =====================================
-       CREATE TABLE DATA
-       ONE ROW = ONE SCHOOL
-    ===================================== */
-
-    tableData =
-      cfg.schools.map(function(){
-
-        return Array(
-          cfg.columns.length
-        ).fill("");
-
-      });
-
-
-    /* =====================================
-       TITLE
-    ===================================== */
-
-    $("entryTitle").textContent =
-      "📋 " + cfg.infoName;
-
-
-    /* =====================================
-       RENDER TABLE
-    ===================================== */
+    $("entryTitle").textContent = "📋 " + cfg.infoName;
 
     renderTable();
 
+    $("createSection").classList.add("hidden");
+    $("entryArea").classList.remove("hidden");
 
-    /* =====================================
-       HIDE CREATE FORM
-    ===================================== */
-
-    $("createSection")
-      .classList
-      .add("hidden");
-
-
-    $("entryArea")
-      .classList
-      .remove("hidden");
-
-
-    $("saveMsg").className =
-      "msg ok";
-
-
+    $("saveMsg").className = "msg ok";
     $("saveMsg").textContent =
       "✓ Information form तैयार है। अब हर School की row में information भरें।";
 
-
   }
-
   catch(error){
 
     console.error(error);
 
-
     showMsg(
-      "Google API Connection failed: " +
-      error.message,
+      "Google API Connection failed: " + error.message,
       "err"
     );
 
@@ -810,7 +643,7 @@ catch(error) {
    RENDER TABLE
 ===================================================== */
 
-function renderTable(){
+
 
   if(!cfg) return;
 
