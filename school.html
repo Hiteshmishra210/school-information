@@ -400,18 +400,21 @@ function esc(s){
 }
 
 
+
+
 /* ==========================================
    API CALL
    ========================================== */
 
-async function apiCall(action, params = {}){
+async function apiCall(action, params = {}) {
 
   let url =
     API +
     "?action=" +
     encodeURIComponent(action);
 
-  Object.keys(params).forEach(function(key){
+
+  Object.keys(params).forEach(function(key) {
 
     url +=
       "&" +
@@ -422,34 +425,45 @@ async function apiCall(action, params = {}){
   });
 
 
-  try{
+  console.log(
+    "API REQUEST:",
+    url
+  );
+
+
+  try {
 
     const response =
       await fetch(
         url,
         {
-          method:"GET",
-          redirect:"follow",
-          cache:"no-store"
+          method: "GET",
+          redirect: "follow",
+          cache: "no-store"
         }
       );
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "Google API HTTP Error: " +
-        response.status
-      );
-
-    }
 
 
     const text =
       await response.text();
 
 
-    if(!text){
+    console.log(
+      "API HTTP STATUS:",
+      response.status
+    );
+
+    console.log(
+      "API RESPONSE:",
+      text
+    );
+
+
+    /*
+     * Google API ने response दिया है
+     */
+
+    if (!text) {
 
       throw new Error(
         "Google API ने खाली response दिया"
@@ -458,17 +472,19 @@ async function apiCall(action, params = {}){
     }
 
 
+    /*
+     * JSON पढ़ने की कोशिश
+     */
+
     let data;
 
-    try{
+    try {
 
       data =
         JSON.parse(text);
 
     }
-    catch(e){
-
-      console.log("API RESPONSE:",text);
+    catch (e) {
 
       throw new Error(
         "Google API का response JSON नहीं है"
@@ -477,10 +493,32 @@ async function apiCall(action, params = {}){
     }
 
 
+    /*
+     * Apps Script ने खुद error दिया
+     */
+
+    if (
+      data &&
+      data.ok === false
+    ) {
+
+      throw new Error(
+        data.error ||
+        "Google API error"
+      );
+
+    }
+
+
+    /*
+     * SUCCESS
+     */
+
     return data;
 
+
   }
-  catch(error){
+  catch(error) {
 
     console.error(
       "API ERROR:",
