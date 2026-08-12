@@ -954,7 +954,6 @@ async function submitForm(){
     return;
   }
 
-
   const data =
     rows.filter(function(rowObj){
 
@@ -969,7 +968,6 @@ async function submitForm(){
 
     });
 
-
   if(!data.length){
 
     alert(
@@ -979,7 +977,6 @@ async function submitForm(){
     return;
   }
 
-
   try{
 
     $("msg").className =
@@ -987,7 +984,6 @@ async function submitForm(){
 
     $("msg").textContent =
       "Google Sheet में save हो रहा है...";
-
 
     const result =
       await apiCall(
@@ -1004,12 +1000,10 @@ async function submitForm(){
         }
       );
 
-
     console.log(
       "SUBMIT RESPONSE:",
       result
     );
-
 
     if(
       !result ||
@@ -1024,12 +1018,6 @@ async function submitForm(){
 
     }
 
-
-    /*
-      Save सफल होने के बाद
-      Sheet से fresh data फिर load करेंगे।
-    */
-
     const fresh =
       await apiCall(
         "getSchoolRows",
@@ -1041,7 +1029,6 @@ async function submitForm(){
             school
         }
       );
-
 
     if(
       fresh &&
@@ -1070,9 +1057,7 @@ async function submitForm(){
 
     }
 
-
     render();
-
 
     $("msg").className =
       "msg ok";
@@ -1081,8 +1066,8 @@ async function submitForm(){
       "✓ Information successfully save/update हो गई। " +
       "नई और पुरानी सभी rows सुरक्षित हैं।";
 
-
   }
+
   catch(error){
 
     console.error(error);
@@ -1097,7 +1082,6 @@ async function submitForm(){
   }
 
 }
-
 
 /* ==========================================
    PRINT
