@@ -632,7 +632,7 @@ async function createInformation(){
 
   try{
 
- /* =====================================
+/* =====================================
    CREATE INFORMATION FORM
 ===================================== */
 
@@ -657,9 +657,15 @@ try {
 
   const result = await response.json();
 
-  console.log("CREATE RESPONSE:", result);
+  console.log(
+    "CREATE RESPONSE:",
+    result
+  );
 
-  if (!result || !result.ok) {
+  if (
+    !result ||
+    !result.ok
+  ) {
 
     throw new Error(
       result && result.error
@@ -669,21 +675,24 @@ try {
 
   }
 
-  // सबसे जरूरी
+  // Form ID save करो
   formId = result.formId;
 
-  // बनाया हुआ form नीचे दिखाओ
+  // नीचे बनाया हुआ form दिखाओ
   await loadForm();
 
 }
-catch(error){
+
+catch(error) {
 
   console.error(error);
 
-  alert(
-    "Information create नहीं हुई:\n" +
-    error.message
-  );
+  $("saveMsg").className =
+    "msg err";
+
+  $("saveMsg").textContent =
+    "Google API Connection failed: " +
+    error.message;
 
 }
     /* =====================================
