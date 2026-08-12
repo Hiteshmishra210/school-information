@@ -642,17 +642,14 @@ async function createInformation(){
 /* =====================================================
    RENDER TABLE
 ===================================================== */
-
-
+function renderTable(){
 
   if(!cfg) return;
-
 
   /* HEADER */
 
   let headerHTML =
     "<tr>" +
-
     "<th>School Name</th>" +
 
     cfg.columns
@@ -669,10 +666,7 @@ async function createInformation(){
 
     "</tr>";
 
-
-  $("tableHead").innerHTML =
-    headerHTML;
-
+  $("tableHead").innerHTML = headerHTML;
 
   /* BODY */
 
@@ -686,7 +680,6 @@ async function createInformation(){
             .map(function(column,colIndex){
 
               return (
-
                 "<td>" +
 
                 '<input type="text" ' +
@@ -704,34 +697,27 @@ async function createInformation(){
                 ',this.value)">' +
 
                 "</td>"
-
               );
 
             })
             .join("");
 
-
         return (
-
           "<tr>" +
 
           '<td class="school-name">' +
-
           escapeHtml(school) +
-
           "</td>" +
 
           cells +
 
           "</tr>"
-
         );
 
       })
       .join("");
 
 }
-
 
 /* =====================================================
    UPDATE CELL
