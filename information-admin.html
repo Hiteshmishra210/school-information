@@ -572,21 +572,13 @@ async function createInformation(){
 
   try{
 
-    const response = await fetch(API, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-      },
-      body: new URLSearchParams({
-        action: "createForm",
-        pin: pin,
-        name: infoName,
-        columns: columns,
-        schools: schools
-      }).toString()
+    const result = await apiCall({
+      action: "createForm",
+      pin: pin,
+      name: infoName,
+      columns: columns,
+      schools: schools
     });
-
-    const result = await response.json();
 
     console.log("CREATE RESPONSE:", result);
 
