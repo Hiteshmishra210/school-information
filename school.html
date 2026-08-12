@@ -772,9 +772,13 @@ async function(){
 
 
   rows = [
-    Array(
-      cfg.columns.length
-    ).fill("")
+    {
+      sheetRow: 0,
+      values:
+        Array(
+          cfg.columns.length
+        ).fill("")
+    }
   ];
 
 
