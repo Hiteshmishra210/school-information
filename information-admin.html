@@ -651,24 +651,16 @@ const response = await fetch(API, {
 });
 
 const result = await response.json();
-    console.log(
-      "CREATE RESPONSE:",
-      result
-    );
 
+console.log("CREATE RESPONSE:", result);
 
-    if(
-      !result ||
-      !result.ok
-    ){
-
-      throw new Error(
-        result && result.error
-          ? result.error
-          : "Information create नहीं हुई"
-      );
-
-    }
+if (!result || !result.ok) {
+  throw new Error(
+    result && result.error
+      ? result.error
+      : "Information create नहीं हुई"
+  );
+}
 
 
     /* =====================================
@@ -1011,64 +1003,53 @@ async function saveInformation(){
   try{
 
     /* =====================================
-       SUBMIT INFORMATION
-    ===================================== */
-const result = await apiCall({
-  action: "submitInfo",
-  pin: pin,
-  formId: formId,
-  data: JSON.stringify(data)
+   SUBMIT INFORMATION
+===================================== */
+
+const response = await fetch(API, {
+  method: "POST",
+
+  headers: {
+    "Content-Type":
+      "application/x-www-form-urlencoded;charset=UTF-8"
+  },
+
+  body: new URLSearchParams({
+    action: "submitInfo",
+    pin: pin,
+    formId: formId,
+    data: JSON.stringify(data)
+  }).toString()
 });
 
+const result = await response.json();
 
-    console.log(
-      "SAVE RESPONSE:",
-      result
-    );
+console.log(
+  "SAVE RESPONSE:",
+  result
+);
 
+if (
+  !result ||
+  !result.ok
+) {
 
-    if(
-      !result ||
-      !result.ok
-    ){
-
-      throw new Error(
-        result && result.error
-          ? result.error
-          : "Save नहीं हुआ"
-      );
-
-    }
-
-
-    $("saveMsg").className =
-      "msg ok";
-
-
-    $("saveMsg").textContent =
-      "✓ सभी information Google Sheet में save हो गई। " +
-      result.count +
-      " School की rows save हुईं।";
-
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-
-    $("saveMsg").className =
-      "msg err";
-
-
-    $("saveMsg").textContent =
-      "Google API Connection failed: " +
-      error.message;
-
-  }
+  throw new Error(
+    result && result.error
+      ? result.error
+      : "Save नहीं हुआ"
+  );
 
 }
+
+$("saveMsg").className =
+  "msg ok";
+
+$("saveMsg").textContent =
+  "✓ सभी information Google Sheet में save हो गई। " +
+  result.count +
+  " School की rows save हुईं।";
+    
 function printInformation(){
 
   if(!cfg || !cfg.columns){
