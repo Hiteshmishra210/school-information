@@ -969,6 +969,12 @@ async function submitForm(){
       "✓ " +
       result.count +
       " row Google Sheet में save हो गई।";
+    // Successfully saved → clear entered data
+    rows = [
+    Array(cfg.columns.length).fill("")
+    ];
+
+    render();
 
 
   }
